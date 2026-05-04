@@ -32,7 +32,7 @@ MonoBehaviour:
     - type: 1
       rotation: 0
     - type: 1
-      rotation: 60
+      rotation: 0
     - type: 1
       rotation: 0
     - type: 0
@@ -43,13 +43,13 @@ MonoBehaviour:
     - type: 1
       rotation: 0
     - type: 2
-      rotation: -120
+      rotation: 0
     - type: 1
       rotation: 0
-    - type: 0
+    - type: 1
       rotation: 0
   - column:
-    - type: 1
+    - type: 0
       rotation: 0
     - type: 1
       rotation: 0

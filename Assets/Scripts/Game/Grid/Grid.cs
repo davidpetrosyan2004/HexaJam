@@ -14,8 +14,8 @@ public class Grid : MonoBehaviour
     [SerializeField] private GridData gridData;
     
     [Header("Characteristics")]
-    [SerializeField] private Vector3 tileOffset;
     [SerializeField] private Vector3 turtleOffset;
+    [SerializeField] private Vector3 tileOffset;
     private float timeToMove = 0f;
 
     [Header("Lists")]
@@ -80,7 +80,7 @@ public class Grid : MonoBehaviour
             if (!hit.collider.CompareTag("GridCell"))
                 continue;
 
-            GridCell cell = hit.collider.GetComponent<GridCell>();
+            GridCell cell = hit.collider.GetComponentInParent<GridCell>();
             if (cell == null)
                 continue;
 

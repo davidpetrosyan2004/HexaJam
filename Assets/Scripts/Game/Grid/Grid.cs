@@ -64,12 +64,12 @@ public class Grid : MonoBehaviour
     public Vector3 GetTurtlePositionInFrontOf(Turtle turtle)
     {
         Ray ray = new Ray(
-            turtle.transform.position + new Vector3(0, -0.2f, 0),
-            turtle.transform.forward
+            turtle.transform.position - turtleOffset,
+            Quaternion.Euler(0, 90f, 0) * transform.right
         );
-
+        Debug.DrawLine(ray.origin, ray.origin + ray.direction * 100f, Color.red, 10f);
         RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
-
+        Debug.Log($"Raycast hits for turtle {turtle.name}: {hits.Length}");
         if (hits.Length == 0)
             return turtle.transform.position;
 
@@ -77,8 +77,10 @@ public class Grid : MonoBehaviour
         GridCell lastValidCell = null;
         foreach (var hit in hits)
         {
-            if (!hit.collider.CompareTag("GridCell"))
+            if (!hit.collider.CompareTag("GridCell")){
+                Debug.Log("Hit object that is not a GridCell: " + hit.collider.name);
                 continue;
+            }
 
             GridCell cell = hit.collider.GetComponentInParent<GridCell>();
             if (cell == null)
@@ -92,10 +94,10 @@ public class Grid : MonoBehaviour
                 Debug.Log($"Turtle in front at: {cell.transform.position}");
                 return cell.transform.position + turtleOffset;
             }
-
+            Debug.Log("No turtle in this cell, but it's valid: " + cell.transform.position);
             lastValidCell = cell;
         }
-
+        Debug.Log("No turtle in front, last valid cell: " + (lastValidCell != null ? lastValidCell.transform.position.ToString() : "none"));
         if (lastValidCell != null)
             return lastValidCell.transform.position + turtleOffset;
 

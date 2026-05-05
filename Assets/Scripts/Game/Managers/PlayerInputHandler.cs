@@ -20,23 +20,24 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnEnable()
     {
         touchPressAction.Enable();
-        touchPressAction.performed += TouchPressed;
+        touchPressAction.started += TouchPressed;
     }
 
     private void OnDisable()
     {
-        touchPressAction.performed -= TouchPressed;
+        touchPressAction.started -= TouchPressed;
         touchPressAction.Disable();
     }
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
         Vector2 screenPos = touchPositionAction.ReadValue<Vector2>();
-
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
+            if (!hit.collider) return;
+
             Turtle turtle = hit.collider.GetComponent<Turtle>();
 
             if (turtle != null)

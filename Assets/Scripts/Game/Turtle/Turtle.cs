@@ -1,24 +1,41 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 public class Turtle : MonoBehaviour
 {
     [SerializeField] private Renderer meshRenderer;
-
-    public Color Color
+    public Texture Texture
     {
         get 
         {
-            return meshRenderer.material.color;
+            return meshRenderer.material.GetTexture("_BaseMap");
         } 
         set
         {
-            meshRenderer.material.color = value; 
+            meshRenderer.material.SetTexture("_BaseMap", value);
         }
     }
 
-    public void MoveTo(Vector3 targetPosition, float duration)
+    public void MoveTo(Vector3 targetPosition, bool comeBack=false)
     {
-        transform.DOMove(targetPosition, duration).SetEase(Ease.InOutSine);
+        if(comeBack)
+        {
+            Vector3 originalPosition = transform.position;
+            transform.DOMove(targetPosition, 0.25f).SetEase(Ease.InOutSine).OnComplete(() =>
+            {
+                transform.DOMove(originalPosition, 0.25f).SetEase(Ease.InOutSine);
+            });
+        }
+        else
+            transform.DOMove(targetPosition, 0.25f).SetEase(Ease.Linear).OnComplete(() => {
+                GridCell cell = GetComponentInParent<GridCell>();
+                if (cell != null)
+                {
+                    cell.Turtle = null;
+                }
+                Debug.Log("Turtle moved to inventory");
+            });
     }   
+
 }

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5209843960156176843}
   - component: {fileID: 7687001845787811912}
   - component: {fileID: 2716325098925363885}
-  - component: {fileID: 5666767562299659665}
   - component: {fileID: 4580768319819020062}
+  - component: {fileID: 6135050073910433700}
   m_Layer: 0
   m_Name: Turtle (1)
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2372232996021763074}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.6830127, y: -0.18301266, z: -0.18301266, w: 0.6830127}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -41,7 +41,7 @@ Transform:
   - {fileID: 3407782029657067033}
   - {fileID: 3852789610388599073}
   m_Father: {fileID: 3181534888099724854}
-  m_LocalEulerAnglesHint: {x: -90, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7687001845787811912
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99,8 +99,21 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5666767562299659665
-MeshCollider:
+--- !u!114 &4580768319819020062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2372232996021763074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 929bb23bb6ba15046a35637e3f8b4aa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turtle
+  meshRenderer: {fileID: 2716325098925363885}
+--- !u!135 &6135050073910433700
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -117,23 +130,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8522251558721022834, guid: 03f7b3fcc427f864386567291522aba3, type: 3}
---- !u!114 &4580768319819020062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2372232996021763074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929bb23bb6ba15046a35637e3f8b4aa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Turtle
-  meshRenderer: {fileID: 2716325098925363885}
+  serializedVersion: 3
+  m_Radius: 0.005394251
+  m_Center: {x: -0.00046917424, y: 0.00012032948, z: -0.000034024008}
 --- !u!1 &2797282356325360320
 GameObject:
   m_ObjectHideFlags: 0

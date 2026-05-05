@@ -118,9 +118,8 @@ public class GridDataDrawer : Editor
         switch (type)
         {
             case GridData.CellType.Normal: return Color.white;
-            case GridData.CellType.Red: return Color.red;
-            case GridData.CellType.Green: return Color.green;
-            case GridData.CellType.Blue: return Color.blue;
+            case GridData.CellType.Purple: return new Color(0.5f, 0f, 0.5f);
+            case GridData.CellType.Orange: return new Color(1f, 0.5f, 0f);
             case GridData.CellType.Yellow: return Color.yellow;
             default: return Color.gray;
         }

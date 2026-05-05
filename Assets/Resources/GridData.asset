@@ -18,9 +18,9 @@ MonoBehaviour:
   - column:
     - type: 0
       rotation: 0
-    - type: 1
+    - type: 3
       rotation: 0
-    - type: 1
+    - type: 3
       rotation: 0
     - type: 1
       rotation: 0
@@ -28,26 +28,26 @@ MonoBehaviour:
     - type: 1
       rotation: 0
     - type: 3
+      rotation: -120
+    - type: 2
+      rotation: 60
+    - type: 4
       rotation: 0
-    - type: 1
-      rotation: 0
+  - column:
     - type: 2
       rotation: 0
-  - column:
-    - type: 0
-      rotation: 0
     - type: 1
       rotation: 0
-    - type: 1
-      rotation: 0
+    - type: 3
+      rotation: 120
     - type: 1
       rotation: 0
   - column:
-    - type: 0
+    - type: 2
       rotation: 0
     - type: 1
       rotation: 0
-    - type: 1
+    - type: 4
       rotation: 0
     - type: 1
       rotation: 0

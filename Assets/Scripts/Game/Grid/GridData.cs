@@ -7,9 +7,8 @@ public class GridData : ScriptableObject
     {
         Empty,
         Normal,
-        Red,
-        Green,
-        Blue,
+        Purple,
+        Orange,
         Yellow
     }
     [System.Serializable]

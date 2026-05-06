@@ -20,7 +20,29 @@ public class Grid : MonoBehaviour
 
     [Header("Lists")]
     [SerializeField] private List<Texture> turtleTextures;
+    private int turtleCount;
 
+    private void OnEnable()
+    {
+        GameEvents.OnTurtleDissapear += OnTurtleDissapear;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnTurtleDissapear -= OnTurtleDissapear;
+
+
+    }
+
+    public void OnTurtleDissapear()
+    {
+        turtleCount--;
+        if (turtleCount <= 0)
+        {
+            //GameEvents.OnGameOver?.Invoke();
+            Debug.Log("Win");
+        }
+    }
 
 
     private void Start()
@@ -56,6 +78,8 @@ public class Grid : MonoBehaviour
         turtle.Texture = turtleTexture;
 
         gridCell.Turtle = turtle;
+
+        turtleCount++;
     }
 
     public Texture GetTextureOfTurtle(GridData.CellType cellType)

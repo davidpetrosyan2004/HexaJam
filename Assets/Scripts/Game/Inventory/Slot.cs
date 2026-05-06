@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using DG.Tweening;
 public class Slot : MonoBehaviour
 {
     public Turtle Turtle { get; private set; }
@@ -7,7 +7,16 @@ public class Slot : MonoBehaviour
     public void SetTurtle(Turtle newTurtle)
     {
         Turtle = newTurtle;
-        Turtle.transform.position = transform.position;
-        Turtle.transform.SetParent(transform);
+        newTurtle.transform.DOMove(transform.position, 0.25f).SetEase(Ease.InOutSine);
+        newTurtle.transform.SetParent(transform);
+    }
+
+    public void ClearSlot()
+    {
+        if (Turtle != null)
+        {
+            Turtle.transform.SetParent(null);
+            Turtle = null;
+        }
     }
 }

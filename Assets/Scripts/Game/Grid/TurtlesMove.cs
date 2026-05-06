@@ -39,7 +39,6 @@ public class TurtlesMove : MonoBehaviour
 
             var (target, comeBack) = GetTurtlePositionInFrontOf(turtle);
             turtle.MoveTo(target, comeBack);
-            if (!comeBack) GameEvents.OnTurtleAddedInventory?.Invoke(turtle);
 
             yield return null;
         }
@@ -53,9 +52,9 @@ public class TurtlesMove : MonoBehaviour
             turtle.transform.position - rayOffset,
             Quaternion.Euler(0, 120, 0) * turtle.transform.right
         );
-        Debug.DrawLine(ray.origin, ray.origin + ray.direction * 2f, Color.red, 10f);
-        RaycastHit[] hits = Physics.RaycastAll(ray, 2f);
-        Debug.Log($"Raycast hits for turtle {turtle.name}: {hits.Length}");
+        //Debug.DrawLine(ray.origin, ray.origin + ray.direction * 2f, Color.red, 10f);
+        RaycastHit[] hits = Physics.RaycastAll(ray, 10f);
+        //Debug.Log($"Raycast hits for turtle {turtle.name}: {hits.Length}");
         if (hits.Length == 0)
             return (turtle.transform.position, false);
 
@@ -65,7 +64,7 @@ public class TurtlesMove : MonoBehaviour
         {
             if (!hit.collider.CompareTag("GridCell"))
             {
-                Debug.Log("Hit object that is not a GridCell: " + hit.collider.name);
+                //Debug.Log("Hit object that is not a GridCell: " + hit.collider.name);
                 continue;
             }
 
@@ -78,13 +77,13 @@ public class TurtlesMove : MonoBehaviour
 
             if (cell.Turtle != null)
             {
-                Debug.Log($"Turtle in front at: {cell.transform.position}");
+                //Debug.Log($"Turtle in front at: {cell.transform.position}");
                 return (cell.transform.position + rayOffset, true);
             }
-            Debug.Log("No turtle in this cell, but it's valid: " + cell.transform.position);
+            //Debug.Log("No turtle in this cell, but it's valid: " + cell.transform.position);
             lastValidCell = cell;
         }
-        Debug.Log("No turtle in front, last valid cell: " + (lastValidCell != null ? lastValidCell.transform.position.ToString() : "none"));
+        //Debug.Log("No turtle in front, last valid cell: " + (lastValidCell != null ? lastValidCell.transform.position.ToString() : "none"));
         if (lastValidCell != null)
             return (lastValidCell.transform.position + rayOffset, false);
 

@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System;
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using static GridData;
 public class Turtle : MonoBehaviour
 {
     [SerializeField] private Renderer meshRenderer;
@@ -24,46 +26,54 @@ public class Turtle : MonoBehaviour
 
     private IEnumerator MoveRoutine(Vector3 targetPosition, bool comeBack)
     {
-        Vector3 originalPosition = transform.position;
+        //Vector3 originalPosition = transform.position;
 
-        while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
-        {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                targetPosition,
-                speed * Time.deltaTime
-            );
+        //while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+        //{
+        //    transform.position = Vector3.MoveTowards(
+        //        transform.position,
+        //        targetPosition,
+        //        speed * Time.deltaTime
+        //    );
 
-            yield return null;
-        }
+        //    yield return null;
+        //}
 
-        transform.position = targetPosition;
+        //transform.position = targetPosition;
 
         if (comeBack)
         {
-            while (Vector3.Distance(transform.position, originalPosition) > 0.01f)
-            {
-                transform.position = Vector3.MoveTowards(
-                    transform.position,
-                    originalPosition,
-                    speed * Time.deltaTime
-                );
+            //while (Vector3.Distance(transform.position, originalPosition) > 0.01f)
+            //{
+            //    transform.position = Vector3.MoveTowards(
+            //        transform.position,
+            //        originalPosition,
+            //        speed * Time.deltaTime
+            //    );
 
-                yield return null;
-            }
+            //    yield return null;
+            //}
 
-            transform.position = originalPosition;
+            //transform.position = originalPosition;
+            transform.DOMove(targetPosition, 0.5f).SetLoops(2, LoopType.Yoyo);
         }
         else
         {
-            GridCell cell = GetComponentInParent<GridCell>();
-            if (cell != null)
-            {
-                cell.Turtle = null;
-            }
+            transform.DOMove(targetPosition, 0.5f).SetEase(Ease.InOutCubic).OnComplete(
+                () =>
+                {    GridCell cell = GetComponentInParent<GridCell>();
+                if (cell != null)
+                {
+                    cell.Turtle = null;
+                }
 
-            GameEvents.OnTurtleAddedInventory?.Invoke(this);
-            Debug.Log("Turtle moved to inventory");
+                GameEvents.OnTurtleAddedInventory?.Invoke(this);
+                    Debug.Log("Turtle moved to inventory");
+                }
+                );
+
+            
         }
+        yield return null;
     }
 }

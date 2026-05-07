@@ -7,7 +7,6 @@ public class Slot : MonoBehaviour
     public void SetTurtle(Turtle newTurtle)
     {
         Turtle = newTurtle;
-        newTurtle.transform.DOMove(transform.position, 0.25f).SetEase(Ease.InOutSine);
         newTurtle.transform.SetParent(transform);
     }
 

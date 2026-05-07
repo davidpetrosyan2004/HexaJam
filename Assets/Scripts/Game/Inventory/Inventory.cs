@@ -47,10 +47,12 @@ public class Inventory : MonoBehaviour
     {
         int insertIndex = -1;
 
-        var countSameColor = 0;
+        int countSameColor = 0;
+
         for (int i = 0; i < slots.Count; i++)
         {
-            if (!slots[i].IsEmpty && slots[i].Turtle.Texture == turtle.Texture)
+            if (!slots[i].IsEmpty &&
+                slots[i].Turtle.Texture == turtle.Texture)
             {
                 insertIndex = i;
                 countSameColor++;
@@ -61,19 +63,48 @@ public class Inventory : MonoBehaviour
         {
             insertIndex++;
 
+            Sequence sequence = DOTween.Sequence();
+
             for (int j = slots.Count - 1; j > insertIndex; j--)
             {
                 if (!slots[j - 1].IsEmpty)
-                    slots[j].SetTurtle(slots[j - 1].Turtle);
+                {
+                    Turtle movingTurtle = slots[j - 1].Turtle;
+
+                    slots[j].SetTurtle(movingTurtle);
+
+                    sequence.Join(
+                        movingTurtle.transform
+                            .DOMove(
+                                slots[j].transform.position,
+                                0.25f
+                            )
+                            .SetEase(Ease.InOutSine)
+                    );
+                }
             }
 
             slots[insertIndex].SetTurtle(turtle);
-            if(countSameColor == 2)
-            {
-                TurtlesCompleted(insertIndex-2);
-            }
 
-            CheckIfInventoryIsFulled();
+            sequence.Join(
+                turtle.transform
+                    .DOMove(
+                        slots[insertIndex].transform.position,
+                        0.25f
+                    )
+                    .SetEase(Ease.InOutSine)
+            );
+
+            sequence.OnComplete(() =>
+            {
+                if (countSameColor == 2)
+                {
+                    TurtlesCompleted(insertIndex - 2);
+                }
+
+                CheckIfInventoryIsFulled();
+            });
+
             return;
         }
 
@@ -83,7 +114,13 @@ public class Inventory : MonoBehaviour
             {
                 slots[i].SetTurtle(turtle);
 
+                turtle.transform.DOMove(
+                    slots[i].transform.position,
+                    0.25f
+                );
+
                 CheckIfInventoryIsFulled();
+
                 return;
             }
         }
@@ -102,17 +139,76 @@ public class Inventory : MonoBehaviour
 
         if (t0.Texture == t1.Texture && t1.Texture == t2.Texture)
         {
-            for (int j = index; j <= index + 2; j++)
+            Turtle left = slots[index].Turtle;
+            Turtle middle = slots[index + 1].Turtle;
+            Turtle right = slots[index + 2].Turtle;
+
+            Vector3 upOffset = new Vector3(0, 0, 0.5f);
+
+            Vector3 leftUpPos = left.transform.position + upOffset;
+            Vector3 middleUpPos = middle.transform.position + upOffset;
+            Vector3 rightUpPos = right.transform.position + upOffset;
+
+            Sequence sequence = DOTween.Sequence();
+
+            // Поднять всех
+            sequence.Join(
+                left.transform.DOMove(leftUpPos, 0.25f)
+                    .SetEase(Ease.OutCubic)
+            );
+
+            sequence.Join(
+                middle.transform.DOMove(middleUpPos, 0.25f)
+                    .SetEase(Ease.OutCubic)
+            );
+
+            sequence.Join(
+                right.transform.DOMove(rightUpPos, 0.25f)
+                    .SetEase(Ease.OutCubic)
+            );
+
+            // Точка сбора = позиция средней
+            Vector3 mergePoint = middleUpPos;
+
+            // После поднятия:
+            sequence.Append(
+                left.transform.DOMove(mergePoint, 0.25f)
+                    .SetEase(Ease.InOutSine)
+            );
+
+            sequence.Join(
+                right.transform.DOMove(mergePoint, 0.25f)
+                    .SetEase(Ease.InOutSine)
+            );
+            sequence.Append(
+        left.transform.DOScale(Vector3.zero, 0.2f)
+            .SetEase(Ease.InBack)
+    );
+
+            sequence.Join(
+                middle.transform.DOScale(Vector3.zero, 0.2f)
+                    .SetEase(Ease.InBack)
+            );
+
+            sequence.Join(
+                right.transform.DOScale(Vector3.zero, 0.2f)
+                    .SetEase(Ease.InBack)
+            );
+
+            sequence.OnComplete(() =>
             {
-                slots[j].Turtle.gameObject.SetActive(false);
-                slots[j].ClearSlot();
-            }
+                left.gameObject.SetActive(false);
+                middle.gameObject.SetActive(false);
+                right.gameObject.SetActive(false);
 
-            GameEvents.OnTurtleDissapear?.Invoke();
+                slots[index].ClearSlot();
+                slots[index + 1].ClearSlot();
+                slots[index + 2].ClearSlot();
 
-            InventoryShake();
+                GameEvents.OnTurtleDissapear?.Invoke();
 
-            CollapseSlots();
+                CollapseSlots();
+            });
 
             return;
         }
@@ -134,6 +230,7 @@ public class Inventory : MonoBehaviour
     void CollapseSlots()
     {
         int writeIndex = 0;
+        Sequence sequence = DOTween.Sequence();
 
         for (int readIndex = 0; readIndex < slots.Count; readIndex++)
         {
@@ -142,12 +239,17 @@ public class Inventory : MonoBehaviour
                 if (writeIndex != readIndex)
                 {
                     slots[writeIndex].SetTurtle(slots[readIndex].Turtle);
+                    sequence.Join(slots[readIndex].Turtle.transform.DOMove(
+                        slots[writeIndex].transform.position, 0.25f)
+                        .SetEase(Ease.InOutSine)
+                        );
                     slots[readIndex].ClearSlot();
                 }
 
                 writeIndex++;
             }
         }
+        sequence.OnComplete(() => InventoryShake());
     }
 
     public bool IsInventoryFull()

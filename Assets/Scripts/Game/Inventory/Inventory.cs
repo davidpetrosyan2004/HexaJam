@@ -1,15 +1,16 @@
-using UnityEngine;
-using System.Collections.Generic;
-
 using DG.Tweening;
-using System;
+using System.Collections.Generic;
+using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private int capacity;
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private Transform slotStartPos;
     [SerializeField] private float slotsOffset;
-    private List<Slot> slots = new List<Slot>();
+    [SerializeField] private ParticleSystem turtlesMatchEffect;
+    private List<Slot> slots = new();
+    [SerializeField] private List<Texture> turtleTextures;
+
 
     private void OnEnable()
     {
@@ -38,8 +39,17 @@ public class Inventory : MonoBehaviour
 
     public void InventoryShake()
     {
-        transform.DOMoveY(0.2f, 0.1f)
-        .SetLoops(2, LoopType.Yoyo);
+        Sequence sequence = DOTween.Sequence();
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].IsEmpty) continue;
+            sequence.Join(slots[i].Turtle.transform.DOPunchPosition(
+                    Vector3.forward * 0.1f,
+                    0.3f,
+                    10,
+                    1f
+                ));
+        }
     }
 
 
@@ -101,8 +111,6 @@ public class Inventory : MonoBehaviour
                 {
                     TurtlesCompleted(insertIndex - 2);
                 }
-
-                CheckIfInventoryIsFulled();
             });
 
             return;
@@ -143,72 +151,7 @@ public class Inventory : MonoBehaviour
             Turtle middle = slots[index + 1].Turtle;
             Turtle right = slots[index + 2].Turtle;
 
-            Vector3 upOffset = new Vector3(0, 0, 0.5f);
-
-            Vector3 leftUpPos = left.transform.position + upOffset;
-            Vector3 middleUpPos = middle.transform.position + upOffset;
-            Vector3 rightUpPos = right.transform.position + upOffset;
-
-            Sequence sequence = DOTween.Sequence();
-
-            // Поднять всех
-            sequence.Join(
-                left.transform.DOMove(leftUpPos, 0.25f)
-                    .SetEase(Ease.OutCubic)
-            );
-
-            sequence.Join(
-                middle.transform.DOMove(middleUpPos, 0.25f)
-                    .SetEase(Ease.OutCubic)
-            );
-
-            sequence.Join(
-                right.transform.DOMove(rightUpPos, 0.25f)
-                    .SetEase(Ease.OutCubic)
-            );
-
-            // Точка сбора = позиция средней
-            Vector3 mergePoint = middleUpPos;
-
-            // После поднятия:
-            sequence.Append(
-                left.transform.DOMove(mergePoint, 0.25f)
-                    .SetEase(Ease.InOutSine)
-            );
-
-            sequence.Join(
-                right.transform.DOMove(mergePoint, 0.25f)
-                    .SetEase(Ease.InOutSine)
-            );
-            sequence.Append(
-        left.transform.DOScale(Vector3.zero, 0.2f)
-            .SetEase(Ease.InBack)
-    );
-
-            sequence.Join(
-                middle.transform.DOScale(Vector3.zero, 0.2f)
-                    .SetEase(Ease.InBack)
-            );
-
-            sequence.Join(
-                right.transform.DOScale(Vector3.zero, 0.2f)
-                    .SetEase(Ease.InBack)
-            );
-
-            sequence.OnComplete(() =>
-            {
-                left.gameObject.SetActive(false);
-                middle.gameObject.SetActive(false);
-                right.gameObject.SetActive(false);
-
-                slots[index].ClearSlot();
-                slots[index + 1].ClearSlot();
-                slots[index + 2].ClearSlot();
-
-                GameEvents.OnTurtleDissapear?.Invoke();
-
-                CollapseSlots();
-            });
+            TurtlesCompleteAnimation(left, middle, right, index);
 
             return;
         }
@@ -249,7 +192,7 @@ public class Inventory : MonoBehaviour
                 writeIndex++;
             }
         }
-        sequence.OnComplete(() => InventoryShake());
+        //sequence.OnComplete(() => InventoryShake());
     }
 
     public bool IsInventoryFull()
@@ -260,5 +203,133 @@ public class Inventory : MonoBehaviour
                 return false;
         }
         return true;
+    }
+
+    public void TurtlesCompleteAnimation(Turtle left, Turtle middle, Turtle right, int index)
+    {
+        Vector3 upOffset = new Vector3(0, 0, 0.5f);
+
+        Vector3 leftUpPos = left.transform.position + upOffset;
+        Vector3 middleUpPos = middle.transform.position + upOffset;
+        Vector3 rightUpPos = right.transform.position + upOffset;
+        Sequence sequence = DOTween.Sequence();
+
+        // Take Up All Three
+        sequence.Join(
+            left.transform.DOMove(leftUpPos, 0.25f)
+                .SetEase(Ease.OutCubic)
+        );
+
+        sequence.Join(
+            middle.transform.DOMove(middleUpPos, 0.25f)
+                .SetEase(Ease.OutCubic)
+        );
+
+        sequence.Join(
+            right.transform.DOMove(rightUpPos, 0.25f)
+                .SetEase(Ease.OutCubic)
+        );
+
+        // Point to be collected
+        Vector3 mergePoint = middleUpPos;
+
+        // After Take Over
+        sequence.Append(
+            left.transform.DOMove(mergePoint, 0.25f)
+                .SetEase(Ease.InOutSine)
+        );
+
+        sequence.Join(
+            right.transform.DOMove(mergePoint, 0.25f)
+                .SetEase(Ease.InOutSine)
+        );
+        sequence.Append(
+            left.transform.DOScale(Vector3.zero, 0.2f)
+                .SetEase(Ease.InBack)
+        );
+
+        sequence.Join(
+            middle.transform.DOScale(Vector3.zero, 0.2f)
+                .SetEase(Ease.InBack)
+        );
+
+        sequence.Join(
+            right.transform.DOScale(Vector3.zero, 0.2f)
+                .SetEase(Ease.InBack)
+        );
+        sequence.Append(
+            right.transform.DOPunchScale(
+                Vector3.one * 0.3f,
+                0.15f,
+                10,
+                1
+            )
+        );
+        sequence.Join(
+            left.transform.DOPunchScale(
+                Vector3.one * 0.3f,
+                0.15f,
+                10,
+                1
+            )
+        );
+        sequence.Join(
+            middle.transform.DOPunchScale(
+                Vector3.one * 0.3f,
+                0.15f,
+                10,
+                1
+            )
+        );
+        sequence.AppendCallback(() =>
+        {
+            var turtleEffect = Instantiate(
+                turtlesMatchEffect,
+                middle.transform.position,
+                Quaternion.identity,
+                transform
+            );
+
+            var main = turtleEffect.main;
+
+            main.startColor = new ParticleSystem.MinMaxGradient(GetColorOfTurtle(middle.Texture));
+
+            turtleEffect.Play();
+        });
+        sequence.OnComplete(() =>
+        {
+            left.gameObject.SetActive(false);
+            middle.gameObject.SetActive(false);
+            right.gameObject.SetActive(false);
+
+            slots[index].ClearSlot();
+            slots[index + 1].ClearSlot();
+            slots[index + 2].ClearSlot();
+
+            GameEvents.OnTurtleDissapear?.Invoke();
+            CollapseSlots();
+            CheckIfInventoryIsFulled();
+        });
+    }
+
+    public Color GetColorOfTurtle(Texture turtleTexture)
+    {
+        if (turtleTexture == turtleTextures[0])
+        {
+            Debug.Log("Purple");
+            return Color.purple;
+        }
+        else if (turtleTexture == turtleTextures[1])
+        {
+            Debug.Log("Orange");
+            return Color.orange;
+        }
+        else if (turtleTexture == turtleTextures[2])
+        {
+            Debug.Log("Yellow");
+            return Color.yellow;
+        }
+        Debug.Log("White");
+        return Color.black;
     }
 }

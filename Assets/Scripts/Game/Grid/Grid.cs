@@ -36,10 +36,10 @@ public class Grid : MonoBehaviour
 
     public void OnTurtleDissapear()
     {
-        turtleCount--;
+        turtleCount-=3;
         if (turtleCount <= 0)
         {
-            //GameEvents.OnGameOver?.Invoke();
+            //GameEvents.OnGameWin?.Invoke();
             Debug.Log("Win");
         }
     }

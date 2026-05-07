@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System;
 using System.Collections;
 using UnityEngine;
 using static GridData;
@@ -7,6 +6,7 @@ public class Turtle : MonoBehaviour
 {
     [SerializeField] private Renderer meshRenderer;
     [SerializeField] float speed = 10f;
+    private bool isMoving;
     public Texture Texture
     {
         get 
@@ -18,62 +18,56 @@ public class Turtle : MonoBehaviour
             meshRenderer.material.SetTexture("_BaseMap", value);
         }
     }
-    public void MoveTo(Vector3 targetPosition, bool comeBack = false)
+    public IEnumerator MoveTo(Vector3 targetPosition, bool comeBack = false)
     {
-        StopAllCoroutines();
-        StartCoroutine(MoveRoutine(targetPosition, comeBack));
-    }
+        if (isMoving) yield break;
 
-    private IEnumerator MoveRoutine(Vector3 targetPosition, bool comeBack)
-    {
-        //Vector3 originalPosition = transform.position;
+        transform.DOKill();
 
-        //while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
-        //{
-        //    transform.position = Vector3.MoveTowards(
-        //        transform.position,
-        //        targetPosition,
-        //        speed * Time.deltaTime
-        //    );
-
-        //    yield return null;
-        //}
-
-        //transform.position = targetPosition;
+        isMoving = true;
 
         if (comeBack)
         {
-            //while (Vector3.Distance(transform.position, originalPosition) > 0.01f)
-            //{
-            //    transform.position = Vector3.MoveTowards(
-            //        transform.position,
-            //        originalPosition,
-            //        speed * Time.deltaTime
-            //    );
+            GameEvents.OnTurtleMovingWrong?.Invoke(true);
 
-            //    yield return null;
-            //}
+            bool completed = false;
 
-            //transform.position = originalPosition;
-            transform.DOMove(targetPosition, 0.5f).SetLoops(2, LoopType.Yoyo);
+            transform.DOMove(targetPosition, 0.25f)
+                .SetLoops(2, LoopType.Yoyo)
+                .OnComplete(() =>
+                {
+                    GameEvents.OnTurtleMovingWrong?.Invoke(false);
+                    isMoving = false;
+                    completed = true;
+                });
+
+            yield return new WaitUntil(() => completed);
         }
         else
         {
-            transform.DOMove(targetPosition, 0.5f).SetEase(Ease.InOutCubic).OnComplete(
-                () =>
-                {    GridCell cell = GetComponentInParent<GridCell>();
-                if (cell != null)
+            bool completed = false;
+
+            transform.DOMove(targetPosition, 0.25f)
+                .SetEase(Ease.Linear)
+                .OnComplete(() =>
                 {
-                    cell.Turtle = null;
-                }
+                    GridCell cell = GetComponentInParent<GridCell>();
 
-                GameEvents.OnTurtleAddedInventory?.Invoke(this);
+                    if (cell != null)
+                    {
+                        cell.Turtle = null;
+                    }
+
+                    GameEvents.OnTurtleAddedInventory?.Invoke(this);
+
                     Debug.Log("Turtle moved to inventory");
-                }
-                );
 
-            
+                    completed = true;
+                    isMoving = false;
+                });
+
+            yield return new WaitUntil(() => completed);
         }
-        yield return null;
     }
+
 }

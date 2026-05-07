@@ -727,7 +727,7 @@ Transform:
   m_GameObject: {fileID: 557480673}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.09, y: 1.22, z: -0.876}
+  m_LocalPosition: {x: -0.83, y: 1.22, z: -0.876}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -782,6 +782,11 @@ MonoBehaviour:
   slotPrefab: {fileID: 6602202850853747328, guid: 3f6094bd4a7ef2c44b688588b1a9d266, type: 3}
   slotStartPos: {fileID: 557480674}
   slotsOffset: 0.35
+  turtlesMatchEffect: {fileID: 2667669805567459950, guid: c62bb85e8153cb7469976715b57f5140, type: 3}
+  turtleTextures:
+  - {fileID: 2800000, guid: 7f610deb09a1ff24aadc20c722f136e7, type: 3}
+  - {fileID: 2800000, guid: 5c5de36fcaef2b942b0178e0e4194692, type: 3}
+  - {fileID: 2800000, guid: 6b763bd80630d7f4fbd2fe404805065f, type: 3}
 --- !u!1001 &755356374
 PrefabInstance:
   m_ObjectHideFlags: 0

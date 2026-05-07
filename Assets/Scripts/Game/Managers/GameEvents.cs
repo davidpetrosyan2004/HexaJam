@@ -8,5 +8,6 @@ public static class GameEvents
     public static Action OnTurtlesCompleted;
     public static Action<Turtle> OnTurtleAddedInventory;
     public static Action OnTurtleDissapear;
+    public static Action<bool> OnTurtleMovingWrong;
 
 }

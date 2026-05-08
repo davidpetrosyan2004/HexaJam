@@ -19,8 +19,9 @@ public class Turtle : MonoBehaviour
     }
     public IEnumerator MoveTo(Vector3 targetPosition, bool comeBack = false)
     {
+        bool completed = false;
         AudioManager.Instance.PlaySound("TurtleAdd");
-        if (isMoving) yield break;
+        if (isMoving && completed) yield break;
 
         isMoving = true;
 
@@ -28,10 +29,9 @@ public class Turtle : MonoBehaviour
         {
             GameEvents.OnTurtleMovingWrong?.Invoke(true);
 
-            bool completed = false;
-
             transform.DOMove(targetPosition, 0.25f)
                 .SetLoops(2, LoopType.Yoyo)
+                .SetEase(Ease.InOutSine)
                 .OnComplete(() =>
                 {
                     GameEvents.OnTurtleMovingWrong?.Invoke(false);
@@ -43,8 +43,6 @@ public class Turtle : MonoBehaviour
         }
         else
         {
-            bool completed = false;
-
             transform.DOMove(targetPosition, 0.25f)
                 .SetEase(Ease.Linear)
                 .OnComplete(() =>

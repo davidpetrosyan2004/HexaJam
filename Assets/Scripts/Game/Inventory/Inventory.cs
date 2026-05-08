@@ -87,7 +87,7 @@ public class Inventory : MonoBehaviour
                     )
                     .SetEase(Ease.InOutSine)
             );
-
+            GeneralSequence.Append(sequence);
             sequence.OnComplete(() =>
             {
                 if (countSameColor == 2)
@@ -95,7 +95,7 @@ public class Inventory : MonoBehaviour
                     TurtlesCompleted(insertIndex - 2);
                 }
             });
-            GeneralSequence.Append(sequence);
+
 
             return;
         }
@@ -116,6 +116,7 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
+        Debug.Log("NO SLOTS AVAILABLE");
     }
     public void TurtlesCompleted(int index)
     {
@@ -232,6 +233,7 @@ public class Inventory : MonoBehaviour
 
             turtleEffect.Play();
         });
+        GeneralSequence.Append(sequence);
         sequence.OnComplete(() =>
         {
             left.gameObject.SetActive(false);
@@ -246,7 +248,7 @@ public class Inventory : MonoBehaviour
             CollapseSlots();
             CheckIfInventoryIsFulled();
         });
-        GeneralSequence.Append(sequence);
+        
     }
     public Color GetColorOfTurtle(Texture turtleTexture)
     {

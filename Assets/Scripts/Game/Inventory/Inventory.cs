@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private ParticleSystem turtlesMatchEffect;
     private List<Slot> slots = new();
     [SerializeField] private List<Texture> turtleTextures;
-
+    private Sequence GeneralSequence;
 
     private void OnEnable()
     {
@@ -36,22 +36,6 @@ public class Inventory : MonoBehaviour
             slots.Add(slot);
         }
     }
-
-    public void InventoryShake()
-    {
-        Sequence sequence = DOTween.Sequence();
-        for (int i = 0; i < slots.Count; i++)
-        {
-            if (slots[i].IsEmpty) continue;
-            sequence.Join(slots[i].Turtle.transform.DOPunchPosition(
-                    Vector3.forward * 0.1f,
-                    0.3f,
-                    10,
-                    1f
-                ));
-        }
-    }
-
 
     public void AddTurtle(Turtle turtle)
     {
@@ -82,7 +66,6 @@ public class Inventory : MonoBehaviour
                     Turtle movingTurtle = slots[j - 1].Turtle;
 
                     slots[j].SetTurtle(movingTurtle);
-
                     sequence.Join(
                         movingTurtle.transform
                             .DOMove(
@@ -90,7 +73,7 @@ public class Inventory : MonoBehaviour
                                 0.25f
                             )
                             .SetEase(Ease.InOutSine)
-                    );
+                 );
                 }
             }
 
@@ -112,6 +95,7 @@ public class Inventory : MonoBehaviour
                     TurtlesCompleted(insertIndex - 2);
                 }
             });
+            GeneralSequence.Append(sequence);
 
             return;
         }
@@ -156,55 +140,6 @@ public class Inventory : MonoBehaviour
             return;
         }
     }
-
-    private void CheckIfInventoryIsFulled()
-    {
-        for(int i = 0; i < capacity; i++)
-        {
-            if (slots[i].IsEmpty)
-            {
-                return;
-            }
-        }
-        Debug.Log("Game Over");
-        //GameEvents.OnGameOver?.Invoke();
-    }
-
-    void CollapseSlots()
-    {
-        int writeIndex = 0;
-        Sequence sequence = DOTween.Sequence();
-
-        for (int readIndex = 0; readIndex < slots.Count; readIndex++)
-        {
-            if (!slots[readIndex].IsEmpty)
-            {
-                if (writeIndex != readIndex)
-                {
-                    slots[writeIndex].SetTurtle(slots[readIndex].Turtle);
-                    sequence.Join(slots[readIndex].Turtle.transform.DOMove(
-                        slots[writeIndex].transform.position, 0.25f)
-                        .SetEase(Ease.InOutSine)
-                        );
-                    slots[readIndex].ClearSlot();
-                }
-
-                writeIndex++;
-            }
-        }
-        //sequence.OnComplete(() => InventoryShake());
-    }
-
-    public bool IsInventoryFull()
-    {
-        foreach (var slot in slots)
-        {
-            if (slot.IsEmpty)
-                return false;
-        }
-        return true;
-    }
-
     public void TurtlesCompleteAnimation(Turtle left, Turtle middle, Turtle right, int index)
     {
         Vector3 upOffset = new Vector3(0, 0, 0.5f);
@@ -293,6 +228,7 @@ public class Inventory : MonoBehaviour
             var main = turtleEffect.main;
 
             main.startColor = new ParticleSystem.MinMaxGradient(GetColorOfTurtle(middle.Texture));
+            AudioManager.Instance.PlaySound("TurtlesMatch");
 
             turtleEffect.Play();
         });
@@ -310,8 +246,8 @@ public class Inventory : MonoBehaviour
             CollapseSlots();
             CheckIfInventoryIsFulled();
         });
+        GeneralSequence.Append(sequence);
     }
-
     public Color GetColorOfTurtle(Texture turtleTexture)
     {
         if (turtleTexture == turtleTextures[0])
@@ -331,5 +267,56 @@ public class Inventory : MonoBehaviour
         }
         Debug.Log("White");
         return Color.black;
+    }
+    private void CheckIfInventoryIsFulled()
+    {
+        for(int i = 0; i < capacity; i++)
+        {
+            if (slots[i].IsEmpty)
+            {
+                return;
+            }
+        }
+        Debug.Log("Game Over");
+        //GameEvents.OnGameOver?.Invoke();
+    }
+    private void CollapseSlots()
+    {
+        int writeIndex = 0;
+        Sequence sequence = DOTween.Sequence();
+
+        for (int readIndex = 0; readIndex < slots.Count; readIndex++)
+        {
+            if (!slots[readIndex].IsEmpty)
+            {
+                if (writeIndex != readIndex)
+                {
+                    slots[writeIndex].SetTurtle(slots[readIndex].Turtle);
+                    sequence.Join(slots[readIndex].Turtle.transform.DOMove(
+                        slots[writeIndex].transform.position, 0.25f)
+                        .SetEase(Ease.InOutSine)
+                        );
+                    slots[readIndex].ClearSlot();
+                }
+
+                writeIndex++;
+            }
+        }
+        GeneralSequence.Append(sequence);
+        //sequence.OnComplete(() => InventoryShake());
+    }
+    public void InventoryShake()
+    {
+        Sequence sequence = DOTween.Sequence();
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].IsEmpty) continue;
+            sequence.Join(slots[i].Turtle.transform.DOPunchPosition(
+                    Vector3.forward * 0.1f,
+                    0.3f,
+                    10,
+                    1f
+                ));
+        }
     }
 }

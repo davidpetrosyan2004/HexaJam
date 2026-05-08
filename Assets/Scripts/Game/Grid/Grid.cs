@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static GridData;
@@ -60,6 +58,7 @@ public class Grid : MonoBehaviour
                 PlaceTileTypeOnBoard(gridData.board[i].column[j].type, gridData.board[i].column[j].rotation,pos);
             }
         }
+        GameEvents.OnTurtlesCountTextSet?.Invoke(turtleCount);
     }
 
     private void PlaceTileTypeOnBoard(GridData.CellType cellType, float rotation, Vector3Int pos)

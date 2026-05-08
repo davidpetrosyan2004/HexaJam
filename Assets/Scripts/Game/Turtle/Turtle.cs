@@ -5,7 +5,6 @@ using static GridData;
 public class Turtle : MonoBehaviour
 {
     [SerializeField] private Renderer meshRenderer;
-    [SerializeField] float speed = 10f;
     private bool isMoving;
     public Texture Texture
     {
@@ -20,9 +19,8 @@ public class Turtle : MonoBehaviour
     }
     public IEnumerator MoveTo(Vector3 targetPosition, bool comeBack = false)
     {
+        AudioManager.Instance.PlaySound("TurtleAdd");
         if (isMoving) yield break;
-
-        transform.DOKill();
 
         isMoving = true;
 
@@ -61,7 +59,7 @@ public class Turtle : MonoBehaviour
                     GameEvents.OnTurtleAddedInventory?.Invoke(this);
 
                     Debug.Log("Turtle moved to inventory");
-
+                    GameEvents.OnTurtlesSubstract?.Invoke();
                     completed = true;
                     isMoving = false;
                 });
@@ -69,5 +67,4 @@ public class Turtle : MonoBehaviour
             yield return new WaitUntil(() => completed);
         }
     }
-
 }

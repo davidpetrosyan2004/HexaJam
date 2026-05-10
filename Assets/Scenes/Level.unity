@@ -171,6 +171,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelBase
       objectReference: {fileID: 0}
+    - target: {fileID: 6678444018005590045, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 6678444018005590045, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.81273675
+      objectReference: {fileID: 0}
+    - target: {fileID: 6678444018005590045, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5826311
+      objectReference: {fileID: 0}
+    - target: {fileID: 6678444018005590045, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 71.272
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

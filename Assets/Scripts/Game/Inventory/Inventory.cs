@@ -90,6 +90,7 @@ public class Inventory : MonoBehaviour
             sequence.OnComplete(() =>
             {
                 CheckMatches();
+                CheckIfInventoryIsFulled();
             });
 
             return;

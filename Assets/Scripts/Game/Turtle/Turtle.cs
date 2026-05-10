@@ -10,11 +10,13 @@ public class Turtle : MonoBehaviour
     [SerializeField] private ParticleSystem waterSplashEffect;
     [SerializeField] private GameObject rippleEffect;
     [SerializeField] private Transform rootBonePosition;
+    [SerializeField] private Collider turtleCollider;
     
     private bool isMoving;
     private void Start()
     {
         turtleAnimator = GetComponent<Animator>();
+        turtleCollider = GetComponent<Collider>();
     }
     public Texture Texture
     {
@@ -36,12 +38,11 @@ public class Turtle : MonoBehaviour
         if (isMoving) yield break;
 
         isMoving = true;
-
         if (comeBack)
         {
             GameEvents.OnTurtleMovingWrong?.Invoke(true);
             transform.DOKill();
-            transform.DOMove(targetPosition, .5f)
+            transform.DOMove(targetPosition - Quaternion.Euler(0, 120, 0) * transform.right * 0.3f, .4f)
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine)
                 .OnComplete(() =>
@@ -57,6 +58,7 @@ public class Turtle : MonoBehaviour
         }
         else
         {
+            turtleCollider.enabled = false;
             transform.DOKill();
 
             transform.DOMove(targetPosition, .5f)

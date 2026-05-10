@@ -1,5 +1,6 @@
-using UnityEngine;
 using DG.Tweening;
+using System;
+using UnityEngine;
 public class Slot : MonoBehaviour
 {
     public Turtle Turtle { get; private set; }
@@ -7,6 +8,7 @@ public class Slot : MonoBehaviour
     public void SetTurtle(Turtle newTurtle)
     {
         Turtle = newTurtle;
+        newTurtle.transform.position = transform.position;
         newTurtle.transform.SetParent(transform);
     }
 

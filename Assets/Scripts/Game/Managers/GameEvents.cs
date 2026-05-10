@@ -10,7 +10,6 @@ public static class GameEvents
     public static Action OnTurtlesCompleted;
     public static Action OnTurtleDissapear;
     public static Action OnTurtlesSubstract;
-    public static Action OnGameOver;
-    public static Action OnGameWin;
+    public static Action<bool> OnGameCondition;
 
 }

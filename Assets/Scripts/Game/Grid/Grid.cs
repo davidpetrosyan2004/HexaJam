@@ -37,7 +37,7 @@ public class Grid : MonoBehaviour
         turtleCount-=3;
         if (turtleCount <= 0)
         {
-            //GameEvents.OnGameWin?.Invoke();
+            GameEvents.OnGameCondition?.Invoke(true);
             Debug.Log("Win");
         }
     }

@@ -6,7 +6,7 @@ public class TurtlesMove : MonoBehaviour
     private int wrongMovingCount = 0;
     private Vector3 rayOffset = new Vector3(0, 0.3f, 0);
     [SerializeField] private List<Turtle> turtlesToMove;
-
+    [SerializeField] private Inventory inventory;
     private void OnEnable()
     {
         GameEvents.OnTurtlePressed += AddTurtle;
@@ -30,6 +30,11 @@ public class TurtlesMove : MonoBehaviour
     }
     private void AddTurtle(Turtle turtle)
     {
+        if (!inventory.HasFreeSlot() &&
+!inventory.IsResolvingMatches)
+        {
+            return;
+        }
         if (turtle == null || !turtle.gameObject) return;
 
         if (oneTurtleMovingWrong) return;

@@ -1,12 +1,16 @@
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GameWinLose : MonoBehaviour
 {
     [SerializeField] private GameObject gameWinPanel;
     [SerializeField] private GameObject gameLosePanel;
+    [SerializeField] private GameObject disableGamePanel;
+    private void Start()
+    {
+        disableGamePanel.SetActive(false);
 
+    }
     private void OnEnable()
     {
         GameEvents.OnGameCondition += PanelPopUp;
@@ -30,6 +34,7 @@ public class GameWinLose : MonoBehaviour
         gamePanel.transform.localScale = Vector3.zero;
 
         gamePanel.SetActive(true);
+        disableGamePanel.SetActive(true);
 
         gamePanel.transform
             .DOScale(1f, 0.4f)

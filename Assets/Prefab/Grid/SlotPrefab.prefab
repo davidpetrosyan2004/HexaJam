@@ -122,7 +122,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7662478408320058725}
-  - component: {fileID: 302514283039730531}
   m_Layer: 0
   m_Name: Hex
   m_TagString: GridCell
@@ -146,18 +145,6 @@ Transform:
   - {fileID: 4018750480871903518}
   m_Father: {fileID: 8483312758747795048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &302514283039730531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2258036828433512876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3f355bdb27d0b642b0f46bff75f6ae1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GridCell
 --- !u!1 &6602202850853747328
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,3 +190,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cc657b0784fc042800997f7975e9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
+  meshRenderer: {fileID: 586433322245152439}

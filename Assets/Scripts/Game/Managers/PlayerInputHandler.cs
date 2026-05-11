@@ -11,6 +11,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Awake()
     {
+        Vibration.Init();
+        Application.targetFrameRate = 60;
         playerInput = GetComponent<PlayerInput>();
 
         touchPositionAction = playerInput.actions["TouchPosition"];
@@ -31,6 +33,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
+        Vibration.VibratePop();
         Vector2 screenPos = touchPositionAction.ReadValue<Vector2>();
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
 

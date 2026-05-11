@@ -38,6 +38,8 @@ public class Grid : MonoBehaviour
         if (turtleCount <= 0)
         {
             GameEvents.OnGameCondition?.Invoke(true);
+            var levelIndex = PlayerPrefs.GetInt("CurrentLevel", 1);
+            PlayerPrefs.SetInt("CurrentLevel", levelIndex+1);
             Debug.Log("Win");
         }
     }
@@ -92,6 +94,14 @@ public class Grid : MonoBehaviour
             return turtleTextures[2];
         }
         else if (cellType == GridData.CellType.Yellow)
+        {
+            return turtleTextures[3];
+        }
+        else if (cellType == GridData.CellType.Green)
+        {
+            return turtleTextures[2];
+        }
+        else if (cellType == GridData.CellType.Blue)
         {
             return turtleTextures[3];
         }

@@ -15,6 +15,10 @@ public class Turtle : MonoBehaviour
     private bool isMoving;
     private void Start()
     {
+        transform.DOScale(
+            1.1f,
+            1f
+        ).SetLoops(-1, LoopType.Yoyo);
         turtleAnimator = GetComponent<Animator>();
         turtleCollider = GetComponent<Collider>();
     }
@@ -65,6 +69,7 @@ public class Turtle : MonoBehaviour
                 .SetEase(Ease.InSine)
                 .OnComplete(() =>
                 {
+                    ScaleSizeJump();
                     turtleAnimator.SetTrigger("Jump");
                     Debug.Log("Turtle moved to inventory");
                     GameEvents.OnTurtlesSubstract?.Invoke();
@@ -107,5 +112,13 @@ public class Turtle : MonoBehaviour
 
 
         GameEvents.OnTurtleAddedInventory?.Invoke(this);
+    }
+
+    public void ScaleSizeJump()
+    {
+        transform.DOScale(
+            new Vector3(1.2f, 1.2f, 1.2f),
+            0.1f
+        ).SetLoops(2, LoopType.Yoyo);
     }
 }

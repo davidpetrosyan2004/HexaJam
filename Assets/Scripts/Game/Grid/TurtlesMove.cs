@@ -33,14 +33,16 @@ public class TurtlesMove : MonoBehaviour
         if (!inventory.HasFreeSlot() &&
 !inventory.IsResolvingMatches)
         {
+            Debug.Log(inventory.hasFreeSlot);
             return;
         }
         if (turtle == null || !turtle.gameObject) return;
 
         if (oneTurtleMovingWrong) return;
-
+        if (!inventory.hasFreeSlot) return;
         var (target, comeBack) = GetTurtlePositionInFrontOf(turtle);
 
+        if (!comeBack) inventory.ChangeSlotsCount(-1);
         StartCoroutine(turtle.MoveTo(target, comeBack));
     }
 

@@ -11,6 +11,16 @@ public class Inventory : MonoBehaviour
     [SerializeField] private ParticleSystem turtlesMatchEffect;
     private List<Slot> slots = new();
     [SerializeField] private List<Texture> turtleTextures;
+    private int freeSlotsCount;
+    public bool hasFreeSlot => freeSlotsCount > 0;
+
+
+    public void ChangeSlotsCount(int num)
+    {
+        freeSlotsCount += num;
+        Debug.Log(freeSlotsCount);
+    }
+
     public bool IsResolvingMatches { get; private set; }
     private void OnEnable()
     {
@@ -24,6 +34,9 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+        Vibration.Init();
+        freeSlotsCount = capacity;
+
         for (int i = 0; i < capacity; i++)
         {
             var slotObj = Instantiate(slotPrefab, slotStartPos.position + new Vector3(i * slotsOffset, 0, 0), Quaternion.identity, transform);
@@ -83,6 +96,7 @@ public class Inventory : MonoBehaviour
             }
 
             slots[insertIndex].SetTurtle(turtle);
+            turtle.transform.position = slots[insertIndex].transform.position;
             sequence.Join(
                 turtle.transform.DOScale(1f, 0.5f)
                     .SetEase(Ease.OutBack)
@@ -90,7 +104,7 @@ public class Inventory : MonoBehaviour
             sequence.OnComplete(() =>
             {
                 CheckMatches();
-                CheckIfInventoryIsFulled();
+            CheckIfInventoryIsFulled();
             });
 
             return;
@@ -101,8 +115,10 @@ public class Inventory : MonoBehaviour
             if (slots[i].IsEmpty)
             {
                 slots[i].SetTurtle(turtle);
+                turtle.transform.position = slots[i].transform.position;
                 turtle.transform.DOScale(1f, 0.5f)
                     .SetEase(Ease.OutBack);
+                CheckIfInventoryIsFulled();
 
                 return;
             }
@@ -127,6 +143,8 @@ public class Inventory : MonoBehaviour
                 t1.Texture == t2.Texture)
             {
                 TurtlesCompleted(i);
+                Vibration.VibratePop();
+                AudioManager.Instance.EncreaseVolumePitch();
                 return;
             }
         }
@@ -145,6 +163,7 @@ public class Inventory : MonoBehaviour
 
         if (t0.Texture == t1.Texture && t1.Texture == t2.Texture)
         {
+            ChangeSlotsCount(3);
             Turtle left = slots[index].Turtle;
             Turtle middle = slots[index + 1].Turtle;
             Turtle right = slots[index + 2].Turtle;
@@ -261,7 +280,7 @@ public class Inventory : MonoBehaviour
             middle.gameObject.SetActive(false);
             right.gameObject.SetActive(false);
             IsResolvingMatches = false;
-            CheckIfInventoryIsFulled();
+        CheckIfInventoryIsFulled();
             GameEvents.OnTurtleDissapear?.Invoke();
         });
         
@@ -270,25 +289,44 @@ public class Inventory : MonoBehaviour
     {
         if (turtleTexture == turtleTextures[0])
         {
-            Debug.Log("Purple");
             return Color.purple;
         }
         else if (turtleTexture == turtleTextures[1])
         {
-            Debug.Log("Orange");
             return Color.orange;
         }
         else if (turtleTexture == turtleTextures[2])
         {
-            Debug.Log("Yellow");
             return Color.yellow;
         }
-        Debug.Log("White");
+        else if (turtleTexture == turtleTextures[3])
+        {
+            return Color.green;
+        }
+        else if (turtleTexture == turtleTextures[4])
+        {
+            return Color.blue;
+        }
         return Color.black;
     }
     private void CheckIfInventoryIsFulled()
     {
-        for(int i = 0; i < capacity; i++)
+        if (slots[capacity-2].Turtle != null)
+        {
+            slots[capacity - 1]
+                    .meshRenderer
+                    .material
+                    .DOColor(Color.red, 0.8f)
+                    .SetLoops(-1, LoopType.Yoyo);
+        }
+        else
+        {
+            slots[capacity - 1]
+                    .meshRenderer
+                    .material.DOKill();
+            slots[capacity - 1].SetInitColor();
+        }
+        for (int i = 0; i < capacity; i++)
         {
             if (slots[i].IsEmpty)
             {
@@ -309,10 +347,16 @@ public class Inventory : MonoBehaviour
             {
                 if (writeIndex != readIndex)
                 {
-                    sequence.Join(slots[readIndex].Turtle.transform.DOMove(
-                        slots[writeIndex].transform.position, 0.25f)
-                        .SetEase(Ease.InOutSine)
-                        );
+                    sequence.Insert(
+                        readIndex * 0.05f,
+                        slots[readIndex].Turtle.transform
+                            .DOMove(
+                                slots[writeIndex].transform.position,
+                                0.35f
+                            )
+                            .SetEase(Ease.OutBack)
+                    );
+
                     Turtle turtle = slots[readIndex].Turtle;
 
                     slots[readIndex].ClearSlot();
@@ -323,7 +367,7 @@ public class Inventory : MonoBehaviour
                 writeIndex++;
             }
         }
-        //sequence.OnComplete(() => InventoryShake());
+        sequence.AppendCallback(() => InventoryShake());
     }
     public void InventoryShake()
     {
@@ -331,12 +375,12 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < slots.Count; i++)
         {
             if (slots[i].IsEmpty) continue;
-            sequence.Join(slots[i].Turtle.transform.DOPunchPosition(
-                    Vector3.forward * 0.1f,
-                    0.3f,
-                    10,
-                    1f
-                ));
+            sequence.Join(slots[i].Turtle.transform.DOPunchScale(
+                        Vector3.one * 0.1f,
+                        0.3f,
+                        8,
+                        0.5f
+                    ));
         }
     }
     public bool HasFreeSlot()

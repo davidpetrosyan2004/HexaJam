@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameWinLose
   gameWinPanel: {fileID: 2796311934171833507}
   gameLosePanel: {fileID: 8891510033368813920}
+  disableGamePanel: {fileID: 2870549514334607187}
 --- !u!1 &514955971882149852
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,6 +467,8 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 7f610deb09a1ff24aadc20c722f136e7, type: 3}
   - {fileID: 2800000, guid: 5c5de36fcaef2b942b0178e0e4194692, type: 3}
   - {fileID: 2800000, guid: 6b763bd80630d7f4fbd2fe404805065f, type: 3}
+  - {fileID: 2800000, guid: b75616abc64d7d240b28aaac85f651c9, type: 3}
+  - {fileID: 2800000, guid: b5b43c4204ec1de4a92a2f2782f7042e, type: 3}
 --- !u!1 &1105192023892705685
 GameObject:
   m_ObjectHideFlags: 0
@@ -2015,7 +2018,6 @@ Transform:
   - {fileID: 3486334550328479849}
   - {fileID: 2711917417082794303}
   - {fileID: 6062365368534194682}
-  - {fileID: 6029742917220917596}
   - {fileID: 1710788266743673226}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2816,81 +2818,6 @@ TilemapRenderer:
   m_SortOrder: 0
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
---- !u!1 &7290111347196173888
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6029742917220917596}
-  - component: {fileID: 4872803539059467565}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6029742917220917596
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7290111347196173888}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1133.5708, y: -0.00007, z: 2934.491}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4707001234099392404}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4872803539059467565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7290111347196173888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5373d5f1ecbfce14faa9453e90d850c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  sounds:
-  - name: Theme
-    volume: 0.01
-    loop: 0
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 38d7663ecdc92094688e82f562658cd9, type: 3}
-  - name: TurtleAdd
-    volume: 0.5
-    loop: 0
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 68b12bc1a0583c647802e9cf7d812b04, type: 3}
-  - name: TurtlesMatch
-    volume: 0.5
-    loop: 0
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: a0c4a6454c6a1124e910d217be75ed91, type: 3}
-  - name: GameWin
-    volume: 0.5
-    loop: 0
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 02e96cf673df8ba4f8c3fef390c79513, type: 3}
-  - name: GameLose
-    volume: 0.5
-    loop: 0
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: e1438f71400d6db45889207c85ffbbca, type: 3}
-  - name: WaterSplash
-    volume: 0.5
-    loop: 0
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 9620b82ddc092f142a03d0dfbfa21085, type: 3}
 --- !u!1 &7884167385417360550
 GameObject:
   m_ObjectHideFlags: 0
@@ -3211,6 +3138,8 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 7f610deb09a1ff24aadc20c722f136e7, type: 3}
   - {fileID: 2800000, guid: 5c5de36fcaef2b942b0178e0e4194692, type: 3}
   - {fileID: 2800000, guid: 6b763bd80630d7f4fbd2fe404805065f, type: 3}
+  - {fileID: 2800000, guid: b75616abc64d7d240b28aaac85f651c9, type: 3}
+  - {fileID: 2800000, guid: b5b43c4204ec1de4a92a2f2782f7042e, type: 3}
 --- !u!1 &8738212341592387230
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,9 @@ public class GridData : ScriptableObject
         Normal,
         Purple,
         Orange,
-        Yellow
+        Yellow,
+        Green,
+        Blue
     }
     [System.Serializable]
     public class Cell

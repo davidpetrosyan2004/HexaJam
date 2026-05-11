@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [System.Serializable]
 public class AudioManager : MonoBehaviour
@@ -27,6 +28,7 @@ public class AudioManager : MonoBehaviour
             sound.source.clip = sound.clip;
         }
         PlaySound("Theme");
+        PlaySound("WaveSound");
     }
 
     public void PlaySound(string soundName, bool oneShot = false)
@@ -64,5 +66,11 @@ public class AudioManager : MonoBehaviour
                 sound.source.volume = volume;
             }
         }
+    }
+
+    public void EncreaseVolumePitch()
+    {
+        SoundEffect sound = Array.Find(sounds, x => x.name == "TurtlesMatch");
+        sound.source.pitch += 0.05f;
     }
 }

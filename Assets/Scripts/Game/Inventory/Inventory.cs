@@ -74,6 +74,7 @@ public class Inventory : MonoBehaviour
                 Debug.LogError($"Insert index out of range: {insertIndex}");
                 return;
             }
+
             DG.Tweening.Sequence sequence = DOTween.Sequence();
 
             for (int j = slots.Count - 1; j > insertIndex; j--)
@@ -81,7 +82,6 @@ public class Inventory : MonoBehaviour
                 if (!slots[j - 1].IsEmpty)
                 {
                     Turtle movingTurtle = slots[j - 1].Turtle;
-
                     slots[j].SetTurtle(movingTurtle);
                     slots[j - 1].ClearSlot();
                     sequence.Join(
@@ -97,6 +97,7 @@ public class Inventory : MonoBehaviour
 
             slots[insertIndex].SetTurtle(turtle);
             turtle.transform.position = slots[insertIndex].transform.position;
+            turtle.transform.DOKill();
             sequence.Join(
                 turtle.transform.DOScale(1f, 0.5f)
                     .SetEase(Ease.OutBack)
@@ -104,7 +105,7 @@ public class Inventory : MonoBehaviour
             sequence.OnComplete(() =>
             {
                 CheckMatches();
-            CheckIfInventoryIsFulled();
+                CheckIfInventoryIsFulled();
             });
 
             return;
@@ -116,6 +117,7 @@ public class Inventory : MonoBehaviour
             {
                 slots[i].SetTurtle(turtle);
                 turtle.transform.position = slots[i].transform.position;
+                turtle.transform.DOKill();
                 turtle.transform.DOScale(1f, 0.5f)
                     .SetEase(Ease.OutBack);
                 CheckIfInventoryIsFulled();
@@ -212,6 +214,7 @@ public class Inventory : MonoBehaviour
             left.transform.DOMove(mergePoint, 0.25f)
                 .SetEase(Ease.InOutSine)
         );
+        AudioManager.Instance.PlaySound("TurtlesApproach");
 
         sequence.Join(
             right.transform.DOMove(mergePoint, 0.25f)
@@ -273,14 +276,19 @@ public class Inventory : MonoBehaviour
         });
         sequence.OnComplete(() =>
         {
-            left.transform.DOKill();
-            middle.transform.DOKill();
-            right.transform.DOKill();
+
+            //left.transform.DOKill();
+            //middle.transform.DOKill();
+            //right.transform.DOKill();
+
             left.gameObject.SetActive(false);
             middle.gameObject.SetActive(false);
             right.gameObject.SetActive(false);
+
             IsResolvingMatches = false;
-        CheckIfInventoryIsFulled();
+            CheckIfInventoryIsFulled();
+
+            GameEvents.OnCameraShake?.Invoke();
             GameEvents.OnTurtleDissapear?.Invoke();
         });
         

@@ -11,5 +11,5 @@ public static class GameEvents
     public static Action OnTurtleDissapear;
     public static Action OnTurtlesSubstract;
     public static Action<bool> OnGameCondition;
-
+    public static Action OnCameraShake;
 }

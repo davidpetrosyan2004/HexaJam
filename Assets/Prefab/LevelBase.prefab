@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 6678444018005590045}
   - component: {fileID: 5876668408945909351}
   - component: {fileID: 1816776022651783609}
+  - component: {fileID: 3136520559960857321}
   - component: {fileID: 1964264865529025877}
   m_Layer: 0
   m_Name: Main Camera
@@ -353,6 +354,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729957182038935313}
   m_Enabled: 1
+--- !u!114 &3136520559960857321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729957182038935313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9895416bbc8e742b957ccb1449d4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraShake
 --- !u!114 &1964264865529025877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,6 +494,7 @@ GameObject:
   - component: {fileID: 3853474229882454454}
   - component: {fileID: 3365964706832881747}
   - component: {fileID: 5911209790530267066}
+  - component: {fileID: 3735291774262676918}
   m_Layer: 5
   m_Name: Back Menu
   m_TagString: Untagged
@@ -590,6 +604,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3735291774262676918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105192023892705685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a691206409294f34882fb94795c808b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneButtonBinder
+  sceneName: StartMenu
+  button: {fileID: 5911209790530267066}
+  buttonType: 0
 --- !u!1 &1477921462275867077
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1230,7 @@ GameObject:
   - component: {fileID: 3324921258580630223}
   - component: {fileID: 355802114350585000}
   - component: {fileID: 4749209858789359204}
+  - component: {fileID: 4643123289736771373}
   m_Layer: 5
   m_Name: Back Menu
   m_TagString: Untagged
@@ -1310,6 +1340,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4643123289736771373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2354133629721544584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a691206409294f34882fb94795c808b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneButtonBinder
+  sceneName: StartMenu
+  button: {fileID: 4749209858789359204}
+  buttonType: 0
 --- !u!1 &2575736079283618633
 GameObject:
   m_ObjectHideFlags: 0
@@ -1877,6 +1922,7 @@ GameObject:
   - component: {fileID: 5649119919386921956}
   - component: {fileID: 1860824812343266914}
   - component: {fileID: 3159120635270309583}
+  - component: {fileID: 7996722676182643998}
   m_Layer: 5
   m_Name: Refresh
   m_TagString: Untagged
@@ -1986,6 +2032,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7996722676182643998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5169184058175461835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a691206409294f34882fb94795c808b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneButtonBinder
+  sceneName: 
+  button: {fileID: 3159120635270309583}
+  buttonType: 1
 --- !u!1 &5289480220656239785
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,6 +2372,7 @@ GameObject:
   - component: {fileID: 6894506662948773854}
   - component: {fileID: 6253526274243246385}
   - component: {fileID: 2845528628654107880}
+  - component: {fileID: 489429281933116446}
   m_Layer: 5
   m_Name: Refresh
   m_TagString: Untagged
@@ -2420,6 +2482,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &489429281933116446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6105121587852733057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a691206409294f34882fb94795c808b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneButtonBinder
+  sceneName: 
+  button: {fileID: 2845528628654107880}
+  buttonType: 1
 --- !u!1 &6163894924082974349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2432,6 +2509,7 @@ GameObject:
   - component: {fileID: 6369295320805674302}
   - component: {fileID: 782716057039969992}
   - component: {fileID: 2377957137824193929}
+  - component: {fileID: 7360611022567869275}
   m_Layer: 5
   m_Name: Next Level
   m_TagString: Untagged
@@ -2541,6 +2619,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7360611022567869275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6163894924082974349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a691206409294f34882fb94795c808b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneButtonBinder
+  sceneName: 
+  button: {fileID: 2377957137824193929}
+  buttonType: 2
 --- !u!1 &6367720470361996340
 GameObject:
   m_ObjectHideFlags: 0
@@ -3455,8 +3548,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 3486334550328479849}
     m_Modifications:
     - target: {fileID: 4721066404548581967, guid: a107bea37ad9bbb4f9862cbfa1f990c8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0099754
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721066404548581967, guid: a107bea37ad9bbb4f9862cbfa1f990c8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.0099754
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721066404548581967, guid: a107bea37ad9bbb4f9862cbfa1f990c8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0099754
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721066404548581967, guid: a107bea37ad9bbb4f9862cbfa1f990c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.40393
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 4721066404548581967, guid: a107bea37ad9bbb4f9862cbfa1f990c8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3464,7 +3569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4721066404548581967, guid: a107bea37ad9bbb4f9862cbfa1f990c8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.8723099
+      value: -2.24
       objectReference: {fileID: 0}
     - target: {fileID: 4721066404548581967, guid: a107bea37ad9bbb4f9862cbfa1f990c8, type: 3}
       propertyPath: m_LocalRotation.w

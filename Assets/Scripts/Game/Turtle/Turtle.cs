@@ -36,16 +36,20 @@ public class Turtle : MonoBehaviour
     public IEnumerator MoveTo(Vector3 targetPosition, bool comeBack = false)
     {
         turtleAnimator.SetBool("isMoving", true);
-
+        transform.DOPunchScale(
+            Vector3.one * 0.25f,
+            0.25f,
+            6,
+            0.5f
+        );
         bool completed = false;
         AudioManager.Instance.PlaySound("TurtleAdd");
         if (isMoving) yield break;
-
+        
         isMoving = true;
         if (comeBack)
         {
             GameEvents.OnTurtleMovingWrong?.Invoke(true);
-            transform.DOKill();
             transform.DOMove(targetPosition - Quaternion.Euler(0, 120, 0) * transform.right * 0.3f, .4f)
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine)
@@ -63,7 +67,6 @@ public class Turtle : MonoBehaviour
         else
         {
             turtleCollider.enabled = false;
-            transform.DOKill();
 
             transform.DOMove(targetPosition, .5f)
                 .SetEase(Ease.InSine)
@@ -91,7 +94,6 @@ public class Turtle : MonoBehaviour
     public void JumpWaterEffect()
     {
         Debug.Log("Effect");
-
         transform.localScale = Vector3.zero;
         var initEffectPos=  transform.position;
         transform.position = rootBonePosition.position;

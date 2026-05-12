@@ -12,6 +12,7 @@ public class SceneButtonBinder : MonoBehaviour
     {
         LoadSceneButton,
         CurrentLevelButton,
+        NextLevelButton
     }
     private void Start()
     {
@@ -20,29 +21,24 @@ public class SceneButtonBinder : MonoBehaviour
             int levelIndex = PlayerPrefs.GetInt("CurrentLevel", 1);
             Debug.Log($"CurrentLevel: {levelIndex}");
             string levelSceneName = $"Level {levelIndex}";
-            button.onClick.AddListener(() => {
-                transform.DOPunchScale(
-                    Vector3.one * 0.1f,
-                    0.3f,
-                    8,
-                    0.5f
-                ).OnComplete(()=> SceneManager.LoadScene(levelSceneName));
-
-                PlaySound();
-            });
+            sceneName = levelSceneName;
         }
-        else
+        else if (buttonType == ButtonType.NextLevelButton)
         {
-            button.onClick.AddListener(() => {
-                transform.DOPunchScale(
-                        Vector3.one * 0.1f,
-                        0.3f,
-                        8,
-                        0.5f
-                    ).OnComplete(() => SceneManager.LoadScene(sceneName));
-                PlaySound();
-                });
+            int levelIndex = SceneManager.GetActiveScene().buildIndex+1;
+            sceneName = $"Level {levelIndex}";
         }
+
+        button.onClick.AddListener(() => {
+            transform.DOPunchScale(
+                Vector3.one * 0.1f,
+                0.3f,
+                8,
+                0.5f
+            ).OnComplete(() => SceneManager.LoadScene(sceneName));
+
+            PlaySound();
+        });
     }
 
 

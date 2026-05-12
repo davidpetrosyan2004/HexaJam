@@ -50,4 +50,4 @@ MonoBehaviour:
     - type: 3
       rotation: -120
     - type: 2
-      rotation: 0
+      rotation: 180

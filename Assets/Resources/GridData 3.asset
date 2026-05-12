@@ -12,42 +12,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45e14a4beb657c4287de29143946bc1, type: 3}
   m_Name: GridData 3
   m_EditorClassIdentifier: Assembly-CSharp::GridData
-  columns: 4
-  rows: 4
+  columns: 5
+  rows: 5
   board:
   - column:
     - type: 0
       rotation: 0
-    - type: 3
+    - type: 0
       rotation: 0
-    - type: 1
+    - type: 0
       rotation: 0
-    - type: 1
+    - type: 0
       rotation: 0
-  - column:
-    - type: 1
-      rotation: 0
-    - type: 3
-      rotation: -120
-    - type: 2
-      rotation: 60
-    - type: 4
+    - type: 0
       rotation: 0
   - column:
-    - type: 2
+    - type: 0
       rotation: 0
-    - type: 1
+    - type: 0
       rotation: 0
-    - type: 3
-      rotation: 120
-    - type: 1
+    - type: 0
+      rotation: 0
+    - type: 0
+      rotation: 0
+    - type: 0
       rotation: 0
   - column:
-    - type: 2
+    - type: 0
       rotation: 0
-    - type: 1
+    - type: 0
       rotation: 0
-    - type: 4
+    - type: 0
       rotation: 0
-    - type: 4
+    - type: 0
+      rotation: 0
+    - type: 0
+      rotation: 0
+  - column:
+    - type: 0
+      rotation: 0
+    - type: 0
+      rotation: 0
+    - type: 0
+      rotation: 0
+    - type: 0
+      rotation: 0
+    - type: 0
+      rotation: 0
+  - column:
+    - type: 0
+      rotation: 0
+    - type: 0
+      rotation: 0
+    - type: 0
+      rotation: 0
+    - type: 0
+      rotation: 0
+    - type: 0
       rotation: 0

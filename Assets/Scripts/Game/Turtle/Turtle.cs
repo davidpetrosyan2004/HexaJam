@@ -43,12 +43,12 @@ public class Turtle : MonoBehaviour
             0.5f
         );
         bool completed = false;
-        AudioManager.Instance.PlaySound("TurtleAdd");
         if (isMoving) yield break;
         
         isMoving = true;
         if (comeBack)
         {
+            AudioManager.Instance.PlaySound("TurtleAhead");
             GameEvents.OnTurtleMovingWrong?.Invoke(true);
             transform.DOMove(targetPosition - Quaternion.Euler(0, 120, 0) * transform.right * 0.3f, .4f)
                 .SetLoops(2, LoopType.Yoyo)
@@ -66,6 +66,7 @@ public class Turtle : MonoBehaviour
         }
         else
         {
+            AudioManager.Instance.PlaySound("TurtleAdd");
             turtleCollider.enabled = false;
 
             transform.DOMove(targetPosition, .5f)

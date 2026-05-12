@@ -275,6 +275,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 71.272
       objectReference: {fileID: 0}
+    - target: {fileID: 7055278951310131747, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5313194
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055278951310131747, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5313194
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055278951310131747, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5313194
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055278951310131747, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.24941
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055278951310131747, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.15203
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055278951310131747, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.73
+      objectReference: {fileID: 0}
     - target: {fileID: 7408856108554071742, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
       propertyPath: gridData
       value: 

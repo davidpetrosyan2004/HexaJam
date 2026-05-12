@@ -8,6 +8,7 @@ public class SceneButtonBinder : MonoBehaviour
     [SerializeField] private string sceneName;
     [SerializeField] private Button button;
     [SerializeField] private ButtonType buttonType;
+
     enum ButtonType
     {
         LoadSceneButton,
@@ -15,6 +16,7 @@ public class SceneButtonBinder : MonoBehaviour
         RefreshLevelButton,
         NextLevelButton
     }
+
     private void Start()
     {
         if (buttonType == ButtonType.CurrentLevelButton)
@@ -24,7 +26,7 @@ public class SceneButtonBinder : MonoBehaviour
         }
         else if (buttonType == ButtonType.NextLevelButton)
         {
-            int levelIndex = SceneManager.GetActiveScene().buildIndex+1;
+            int levelIndex = SceneManager.GetActiveScene().buildIndex + 1;
             sceneName = $"Level {levelIndex}";
         }
         else if (buttonType == ButtonType.RefreshLevelButton)
@@ -33,18 +35,30 @@ public class SceneButtonBinder : MonoBehaviour
             sceneName = $"Level {levelIndex}";
         }
 
-        button.onClick.AddListener(() => {
-            transform.DOPunchScale(
-                Vector3.one * 0.1f,
-                0.3f,
-                8,
-                0.5f
-            ).OnComplete(() => SceneManager.LoadScene(sceneName));
-
-            PlaySound();
-        });
+        button.onClick.AddListener(OnButtonClick);
     }
 
+    private void OnButtonClick()
+    {
+        if (buttonType == ButtonType.NextLevelButton)
+        {
+            int levelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+            PlayerPrefs.SetInt("CurrentLevel", levelIndex);
+            PlayerPrefs.Save();
+        }
+
+        transform.DOPunchScale(
+            Vector3.one * 0.1f,
+            0.3f,
+            8,
+            0.5f
+        ).OnComplete(() =>
+        {
+            SceneManager.LoadScene(sceneName);
+        });
+
+        PlaySound();
+    }
 
     public void PlaySound()
     {

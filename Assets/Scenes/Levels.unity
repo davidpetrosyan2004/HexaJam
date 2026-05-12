@@ -1991,7 +1991,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelButton
   levelButtons:
-  - {fileID: 0}
+  - {fileID: 935729854}
+  - {fileID: 956486467}
+  - {fileID: 1908392727}
+  - {fileID: 458168692}
+  - {fileID: 1025951666}
+  - {fileID: 1534161493}
+  - {fileID: 2144885752}
+  - {fileID: 1307458609}
+  - {fileID: 1282156815}
+  - {fileID: 474097490}
+  - {fileID: 1844013483}
 --- !u!1 &1266418094
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class SceneButtonBinder : MonoBehaviour
     {
         LoadSceneButton,
         CurrentLevelButton,
+        RefreshLevelButton,
         NextLevelButton
     }
     private void Start()
@@ -19,13 +20,16 @@ public class SceneButtonBinder : MonoBehaviour
         if (buttonType == ButtonType.CurrentLevelButton)
         {
             int levelIndex = PlayerPrefs.GetInt("CurrentLevel", 1);
-            Debug.Log($"CurrentLevel: {levelIndex}");
-            string levelSceneName = $"Level {levelIndex}";
-            sceneName = levelSceneName;
+            sceneName = $"Level {levelIndex}";
         }
         else if (buttonType == ButtonType.NextLevelButton)
         {
             int levelIndex = SceneManager.GetActiveScene().buildIndex+1;
+            sceneName = $"Level {levelIndex}";
+        }
+        else if (buttonType == ButtonType.RefreshLevelButton)
+        {
+            int levelIndex = SceneManager.GetActiveScene().buildIndex;
             sceneName = $"Level {levelIndex}";
         }
 

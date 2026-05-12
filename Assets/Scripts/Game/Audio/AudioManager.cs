@@ -73,4 +73,10 @@ public class AudioManager : MonoBehaviour
         SoundEffect sound = Array.Find(sounds, x => x.name == "TurtlesMatch");
         sound.source.pitch += 0.05f;
     }
+
+    public void ClearPitch()
+    {
+        SoundEffect sound = Array.Find(sounds, x => x.name == "TurtlesMatch");
+        sound.source.pitch = 1f;
+    }
 }

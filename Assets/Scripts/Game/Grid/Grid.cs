@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using static GridData;
 public class Grid : MonoBehaviour
@@ -19,7 +21,7 @@ public class Grid : MonoBehaviour
     [Header("Lists")]
     [SerializeField] private List<Texture> turtleTextures;
     private int turtleCount;
-
+    
     private void OnEnable()
     {
         GameEvents.OnTurtleDissapear += OnTurtleDissapear;
@@ -31,7 +33,6 @@ public class Grid : MonoBehaviour
 
 
     }
-
     public void OnTurtleDissapear()
     {
         turtleCount-=3;
@@ -39,8 +40,10 @@ public class Grid : MonoBehaviour
         {
             GameEvents.OnGameCondition?.Invoke(true);
             var levelIndex = PlayerPrefs.GetInt("CurrentLevel", 1);
-            PlayerPrefs.SetInt("CurrentLevel", levelIndex+1);
-            Debug.Log("Win");
+            if (SceneManager.GetActiveScene().buildIndex == levelIndex)
+            {
+                PlayerPrefs.SetInt("CurrentLevel", levelIndex+1);
+            }
         }
     }
 
@@ -48,6 +51,7 @@ public class Grid : MonoBehaviour
     private void Start()
     {
         GenerateGrid();
+        AudioManager.Instance.ClearPitch();
     }
 
     public void GenerateGrid()
@@ -99,11 +103,11 @@ public class Grid : MonoBehaviour
         }
         else if (cellType == GridData.CellType.Green)
         {
-            return turtleTextures[2];
+            return turtleTextures[4];
         }
         else if (cellType == GridData.CellType.Blue)
         {
-            return turtleTextures[3];
+            return turtleTextures[5];
         }
         return turtleTextures[0];
     }

@@ -2046,7 +2046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneButtonBinder
   sceneName: 
   button: {fileID: 3159120635270309583}
-  buttonType: 1
+  buttonType: 2
 --- !u!1 &5289480220656239785
 GameObject:
   m_ObjectHideFlags: 0
@@ -2496,7 +2496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneButtonBinder
   sceneName: 
   button: {fileID: 2845528628654107880}
-  buttonType: 1
+  buttonType: 2
 --- !u!1 &6163894924082974349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,7 +2633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneButtonBinder
   sceneName: 
   button: {fileID: 2377957137824193929}
-  buttonType: 2
+  buttonType: 3
 --- !u!1 &6367720470361996340
 GameObject:
   m_ObjectHideFlags: 0

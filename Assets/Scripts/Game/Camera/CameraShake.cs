@@ -14,8 +14,8 @@ public class CameraShake : MonoBehaviour
     {
         transform
             .DOShakePosition(
-                duration: 0.8f,
-                strength: 0.05f,
+                duration: 0.3f,
+                strength: 0.025f,
                 vibrato: 0,
                 randomness: 90,
                 fadeOut: true

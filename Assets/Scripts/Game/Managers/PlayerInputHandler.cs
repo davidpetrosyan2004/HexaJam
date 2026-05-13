@@ -7,11 +7,10 @@ public class PlayerInputHandler : MonoBehaviour
 
     public InputAction touchPositionAction;
     public InputAction touchPressAction;
-
-
+    public Turtle tutorialTurtle;
+    public bool isTutorial = true;
     private void Awake()
     {
-        Vibration.Init();
         Application.targetFrameRate = 60;
         playerInput = GetComponent<PlayerInput>();
 
@@ -33,20 +32,29 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
-        Vibration.VibratePop();
+        AudioManager.Instance.Vibrate();
         Vector2 screenPos = touchPositionAction.ReadValue<Vector2>();
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (!hit.collider) return;
+            if (hit.collider.CompareTag("Layer")) return;
+            if (hit.collider.CompareTag("Swapper"))
+            {
+                hit.collider.GetComponent<TurtleSwapper>().Swap();
+                Debug.Log("Swaping..");
+                return;
+            }
+            if (!hit.collider.CompareTag("Player")) return;
 
             Turtle turtle = hit.collider.GetComponent<Turtle>();
+            if (turtle == null) return;
 
-            if (turtle != null)
-            {
-                GameEvents.OnTurtlePressed?.Invoke(turtle);
-            }
+            // Ограничение для tutorial
+            if (isTutorial && turtle != tutorialTurtle)
+                return;
+
+            GameEvents.OnTurtlePressed?.Invoke(turtle);
         }
     }
 }

@@ -7,8 +7,10 @@ public class AudioManager : MonoBehaviour
 {
     public SoundEffect[] sounds;
     public static AudioManager Instance;
+    public bool isHaptics = true;
     private void Awake()
     {
+        Vibration.Init();
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -49,22 +51,51 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void SetMusicVolume(float volume)
+    public void MusicOff()
     {
         SoundEffect sound = Array.Find(sounds, x => x.name == "Theme");
         if (sound != null)
         {
-            sound.source.volume = volume;
+            sound.source.volume = 0;
         }
     }
-    public void SetSoundsVolume(float volume)
+    public void SoundOff()
     {
         foreach (var sound in sounds)
         {
             if (sound.name != "Theme")
             {
-                sound.source.volume = volume;
+                sound.source.volume = 0;
             }
+        }
+    }
+    public void MusicOn()
+    {
+        SoundEffect sound1 = Array.Find(sounds, x => x.name == "Theme");
+        if (sound1 != null)
+        {
+            sound1.source.volume = 0.05f;
+        }
+        SoundEffect sound2 = Array.Find(sounds, x => x.name == "WaveSound");
+        if (sound2 != null)
+        {
+            sound2.source.volume = 0.05f;
+        }
+
+    }
+    public void SoundOn()
+    {
+        foreach (var sound in sounds)
+        {
+            if (sound.name != "Theme" && sound.name != "WaveSound" && sound.name != "ButtonClick")
+            {
+                sound.source.volume = 0.5f;
+            }
+        }
+        SoundEffect sound2 = Array.Find(sounds, x => x.name == "ButtonClick");
+        if (sound2 != null)
+        {
+            sound2.source.volume = 0.8f;
         }
     }
 
@@ -78,5 +109,11 @@ public class AudioManager : MonoBehaviour
     {
         SoundEffect sound = Array.Find(sounds, x => x.name == "TurtlesMatch");
         sound.source.pitch = 1f;
+    }
+
+    public void Vibrate()
+    {
+        if(isHaptics)
+            Vibration.VibratePop();
     }
 }

@@ -12,6 +12,7 @@ public class Grid : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GridCell hexPrefab;
     [SerializeField] private Turtle turtlePrefab;
+    [SerializeField] private TurtleSwapper turtlesSwapperPrefab;
     [SerializeField] private GridData gridData;
     
     [Header("Characteristics")]
@@ -21,6 +22,8 @@ public class Grid : MonoBehaviour
     [Header("Lists")]
     [SerializeField] private List<Texture> turtleTextures;
     private int turtleCount;
+
+    [SerializeField] private PlayerInputHandler playerInput;
     
     private void OnEnable()
     {
@@ -74,14 +77,27 @@ public class Grid : MonoBehaviour
         {
             return;
         }
+
         GridCell gridCell = Instantiate(hexPrefab, spawnPos + tileOffset, Quaternion.identity, board.transform);
+
+        if (cellType == GridData.CellType.Black)
+        {
+            Instantiate(turtlesSwapperPrefab, spawnPos + turtleOffset, Quaternion.Euler(0, 30, 0), board.transform);
+            Debug.Log("Created Swapper");
+            return;
+        }
 
         Texture turtleTexture = GetTextureOfTurtle(cellType);
         if (turtleTexture == turtleTextures[0]) return;
 
         Turtle turtle = Instantiate(turtlePrefab, spawnPos + turtleOffset, Quaternion.Euler(-90, rotation+30, 0), gridCell.transform);
         turtle.Texture = turtleTexture;
-
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+            playerInput.tutorialTurtle = turtle;
+        else
+        {
+            playerInput.isTutorial = false;
+        }
         gridCell.Turtle = turtle;
 
         turtleCount++;

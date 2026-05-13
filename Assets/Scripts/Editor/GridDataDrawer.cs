@@ -123,6 +123,7 @@ public class GridDataDrawer : Editor
             case GridData.CellType.Yellow: return Color.yellow;
             case GridData.CellType.Green: return Color.green;
             case GridData.CellType.Blue: return Color.blue;
+            case GridData.CellType.Black: return Color.black;
             default: return Color.gray;
         }
     }

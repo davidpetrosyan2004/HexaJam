@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.XR.Haptics;
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private int capacity;
@@ -12,6 +13,8 @@ public class Inventory : MonoBehaviour
     private List<Slot> slots = new();
     [SerializeField] private List<Texture> turtleTextures;
     private int freeSlotsCount;
+
+    private HapticState haptics;
     public bool hasFreeSlot => freeSlotsCount > 0;
 
 
@@ -34,7 +37,6 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        Vibration.Init();
         freeSlotsCount = capacity;
 
         for (int i = 0; i < capacity; i++)
@@ -145,7 +147,7 @@ public class Inventory : MonoBehaviour
                 t1.Texture == t2.Texture)
             {
                 TurtlesCompleted(i);
-                Vibration.VibratePop();
+                AudioManager.Instance.Vibrate();
                 AudioManager.Instance.EncreaseVolumePitch();
                 return;
             }

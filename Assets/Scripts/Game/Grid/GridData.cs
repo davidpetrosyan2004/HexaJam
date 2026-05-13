@@ -11,7 +11,8 @@ public class GridData : ScriptableObject
         Orange,
         Yellow,
         Green,
-        Blue
+        Blue,
+        Black
     }
     [System.Serializable]
     public class Cell

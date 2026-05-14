@@ -40,7 +40,7 @@ public class TurtleSwapper : Turtle
         GridCell gridCell1 = null;
         GridCell gridCell2 = null;
 
-        Ray ray1 = new Ray(point1.transform.position,-point1.transform.forward);
+        Ray ray1 = new Ray(point1.transform.position, -point1.transform.forward);
         Debug.DrawLine(
     ray1.origin,
     ray1.origin + ray1.direction * 10f,
@@ -52,7 +52,7 @@ public class TurtleSwapper : Turtle
             {
                 gridCell1 = hit1.collider.GetComponentInParent<GridCell>();
                 if (gridCell1 == null) Debug.Log("gridCell 1 is NUll");
-                
+
                 Debug.Log("gridCell1 selected");
 
             }
@@ -108,15 +108,15 @@ public class TurtleSwapper : Turtle
     {
         Debug.Log("Swap Turtles");
         Turtle turtle1 = cell1.Turtle;
-        if (turtle1 != null) 
+        if (turtle1 != null)
         {
-            turtle1.transform.SetParent(point1, true);
+            turtle1.transform.SetParent(point1);
         }
 
         Turtle turtle2 = cell2.Turtle;
         if (turtle2 != null)
         {
-            turtle2.transform.SetParent(point2, true);
+            turtle2.transform.SetParent(point2);
         }
 
         Turtle temp = cell1.Turtle;
@@ -157,14 +157,23 @@ public class TurtleSwapper : Turtle
     public void SetInitRotations(GridCell cell1, GridCell cell2, Quaternion initRot1, Quaternion initRot2)
     {
         Turtle turtle1 = cell1.Turtle;
+
         if (turtle1 != null)
         {
-            turtle1.transform.rotation = Quaternion.Euler(initRot1.x - 90f, initRot1.y + 120, initRot1.z + 90f);
+            Vector3 rot1 = initRot1.eulerAngles;
+
+            turtle1.transform.GetChild(0).localRotation =
+                Quaternion.Euler(rot1.x + 180, rot1.y, rot1.z);
         }
+
         Turtle turtle2 = cell2.Turtle;
+
         if (turtle2 != null)
         {
-            turtle2.transform.rotation = Quaternion.Euler(initRot2.x - 90f, initRot2.y + 120, initRot2.z + 90f);
+            Vector3 rot2 = initRot2.eulerAngles;
+
+            turtle2.transform.GetChild(0).localRotation =
+                Quaternion.Euler(rot2.x + 180, rot2.y, rot2.z);
         }
     }
 }

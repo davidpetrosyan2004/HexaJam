@@ -42,8 +42,8 @@ MonoBehaviour:
       rotation: 120
     - type: 4
       rotation: -60
-    - type: 1
-      rotation: 0
+    - type: 7
+      rotation: -120
     - type: 3
       rotation: 0
     - type: 4

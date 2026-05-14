@@ -85,6 +85,12 @@ public class Grid : MonoBehaviour
             var swapper = Instantiate(turtlesSwapperPrefab, spawnPos + turtleOffset, Quaternion.Euler(-90, rotation-30, 0), board.transform);
             Debug.Log("Created Swapper");
             gridCell.Turtle = swapper;
+            if (SceneManager.GetActiveScene().buildIndex == 6)
+            {
+                playerInput.tutorialTurtle = swapper;
+                playerInput.isTutorial = true;
+            }
+
             return;
         }
 
@@ -94,11 +100,11 @@ public class Grid : MonoBehaviour
         Turtle turtle = Instantiate(turtlePrefab, spawnPos + turtleOffset, Quaternion.Euler(-90, rotation+30, 0), gridCell.transform);
         turtle.Texture = turtleTexture;
         if (SceneManager.GetActiveScene().buildIndex == 1)
-            playerInput.tutorialTurtle = turtle;
-        else
         {
-            playerInput.isTutorial = false;
+            playerInput.tutorialTurtle = turtle;
+            playerInput.isTutorial = true;
         }
+
         gridCell.Turtle = turtle;
 
         turtleCount++;

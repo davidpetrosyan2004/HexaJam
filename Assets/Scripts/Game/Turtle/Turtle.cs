@@ -12,7 +12,7 @@ public class Turtle : MonoBehaviour
     [SerializeField] private Transform rootBonePosition;
     [SerializeField] private Collider turtleCollider;
     
-    private bool isMoving;
+    public bool isMoving { get; set; }
     private void Start()
     {
         transform.DOScale(
@@ -50,7 +50,7 @@ public class Turtle : MonoBehaviour
         {
             AudioManager.Instance.PlaySound("TurtleAhead");
             GameEvents.OnTurtleMovingWrong?.Invoke(true);
-            transform.DOMove(targetPosition - Quaternion.Euler(0, 120, 0) * transform.right * 0.3f, .4f)
+            transform.DOMove(targetPosition + Quaternion.Euler(0, 0, 0) * transform.GetChild(0).forward* 0.3f, .4f)
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine)
                 .OnComplete(() =>

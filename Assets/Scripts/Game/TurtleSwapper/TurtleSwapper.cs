@@ -28,6 +28,11 @@ public class TurtleSwapper : Turtle
             Debug.Log("Both turtles are null");
             return;
         }
+
+        if (cell1.Turtle.isMoving || cell2.Turtle.isMoving)
+        {
+            return;
+        }
         Quaternion initRot1 = Quaternion.identity;
         Quaternion initRot2 = Quaternion.identity;
         (initRot1, initRot2) = GetInitRotations(cell1, cell2);
@@ -108,13 +113,13 @@ public class TurtleSwapper : Turtle
     {
         Debug.Log("Swap Turtles");
         Turtle turtle1 = cell1.Turtle;
-        if (turtle1 != null)
+        if (turtle1 != null && !turtle1.isMoving)
         {
             turtle1.transform.SetParent(point1);
         }
 
         Turtle turtle2 = cell2.Turtle;
-        if (turtle2 != null)
+        if (turtle2 != null && !turtle2.isMoving)
         {
             turtle2.transform.SetParent(point2);
         }
@@ -130,13 +135,19 @@ public class TurtleSwapper : Turtle
         SwapTurtles(cell1, cell2);
         colliderSpawner.enabled = false;
         AudioManager.Instance.PlaySound("ButtonClick");
+        cell1.Turtle.isMoving = true;
+        cell2.Turtle.isMoving = true;
         DG.Tweening.Sequence sequence = DOTween.Sequence();
         sequence.Join(transform.DORotate(new Vector3(0, 0, 180), 0.3f, RotateMode.LocalAxisAdd).SetEase(Ease.OutBack).OnComplete(() =>
         {
             PutDownTurtles(cell1, cell2);
             colliderSpawner.enabled = true;
+
         }));
-        sequence.Join(transform.DOScaleZ(30f, 0.15f).SetEase(Ease.OutBack).SetLoops(2, LoopType.Yoyo));
+        sequence.Join(transform.DOScaleZ(30f, 0.15f).SetEase(Ease.OutBack).SetLoops(2, LoopType.Yoyo).OnComplete(()=>{
+            cell1.Turtle.isMoving = false;
+            cell2.Turtle.isMoving = false;
+        }));
     }
 
     public void PutDownTurtles(GridCell cell1, GridCell cell2)

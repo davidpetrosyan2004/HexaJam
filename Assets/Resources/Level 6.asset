@@ -22,8 +22,8 @@ MonoBehaviour:
       rotation: 180
     - type: 4
       rotation: 180
-    - type: 4
-      rotation: 60
+    - type: 5
+      rotation: 0
     - type: 5
       rotation: 0
   - column:
@@ -62,7 +62,7 @@ MonoBehaviour:
   - column:
     - type: 5
       rotation: -60
-    - type: 1
+    - type: 4
       rotation: 0
     - type: 5
       rotation: 180

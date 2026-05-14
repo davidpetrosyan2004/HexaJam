@@ -511,7 +511,7 @@ PrefabInstance:
     - target: {fileID: 7408856108554071742, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
       propertyPath: gridData
       value: 
-      objectReference: {fileID: 11400000, guid: 17832afa8c1d3ee48987dd56e646b222, type: 2}
+      objectReference: {fileID: 11400000, guid: 47a367d30af4314408309ba69fd24a9e, type: 2}
     - target: {fileID: 7408856108554071742, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
       propertyPath: playerInput
       value: 

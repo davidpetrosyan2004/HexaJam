@@ -32,7 +32,7 @@ MonoBehaviour:
     - type: 4
       rotation: 180
     - type: 3
-      rotation: 120
+      rotation: 180
   - column:
     - type: 0
       rotation: 0

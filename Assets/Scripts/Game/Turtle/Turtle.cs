@@ -102,13 +102,13 @@ public class Turtle : MonoBehaviour
 
         Instantiate(
             waterSplashEffect,
-            initEffectPos + Quaternion.Euler(0, 120, 0) * transform.right,
+            initEffectPos - transform.GetChild(0).forward,
             Quaternion.identity
         );
 
         GameObject ripple = Instantiate(
             rippleEffect,
-            initEffectPos + Quaternion.Euler(0, 120, 0) * transform.right,
+            initEffectPos -transform.GetChild(0).forward,
             Quaternion.identity
         );
         transform.localRotation = Quaternion.Euler(-90, 70, 90);

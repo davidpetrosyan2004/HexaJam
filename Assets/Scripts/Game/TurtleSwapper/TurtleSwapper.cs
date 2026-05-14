@@ -174,7 +174,7 @@ public class TurtleSwapper : Turtle
             Vector3 rot1 = initRot1.eulerAngles;
 
             turtle1.transform.GetChild(0).localRotation =
-                Quaternion.Euler(rot1.x + 180, rot1.y, rot1.z);
+                Quaternion.Euler(rot1.x, rot1.y, rot1.z);
         }
 
         Turtle turtle2 = cell2.Turtle;
@@ -184,7 +184,7 @@ public class TurtleSwapper : Turtle
             Vector3 rot2 = initRot2.eulerAngles;
 
             turtle2.transform.GetChild(0).localRotation =
-                Quaternion.Euler(rot2.x + 180, rot2.y, rot2.z);
+                Quaternion.Euler(rot2.x, rot2.y, rot2.z);
         }
     }
 }

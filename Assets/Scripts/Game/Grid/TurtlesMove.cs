@@ -52,9 +52,8 @@ public class TurtlesMove : MonoBehaviour
     {
         Ray ray = new Ray(
             turtle.transform.position - rayOffset,
-            (-turtle.transform.GetChild(0).forward)
+            Quaternion.Euler(0, 0, 0) * turtle.transform.right
         );
-        Debug.DrawLine(ray.origin, ray.direction * 20f, Color.red, 10f);
         RaycastHit[] hits = Physics.RaycastAll(ray, 30f);
         if (hits.Length == 0)
             return (turtle.transform.position, false);

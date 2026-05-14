@@ -82,8 +82,9 @@ public class Grid : MonoBehaviour
 
         if (cellType == GridData.CellType.Black)
         {
-            Instantiate(turtlesSwapperPrefab, spawnPos + turtleOffset, Quaternion.Euler(0, 30, 0), board.transform);
+            var swapper = Instantiate(turtlesSwapperPrefab, spawnPos + turtleOffset, Quaternion.Euler(-90, rotation-30, 0), board.transform);
             Debug.Log("Created Swapper");
+            gridCell.Turtle = swapper;
             return;
         }
 

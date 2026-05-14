@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using static GridData;
 
-public class TurtleSwapper : MonoBehaviour
+public class TurtleSwapper : Turtle
 {
     [SerializeField] private Transform point1;
     [SerializeField] private Transform point2;
@@ -40,7 +40,7 @@ public class TurtleSwapper : MonoBehaviour
         GridCell gridCell1 = null;
         GridCell gridCell2 = null;
 
-        Ray ray1 = new Ray(point1.transform.position, -point1.transform.up);
+        Ray ray1 = new Ray(point1.transform.position,-point1.transform.forward);
         Debug.DrawLine(
     ray1.origin,
     ray1.origin + ray1.direction * 10f,
@@ -62,12 +62,12 @@ public class TurtleSwapper : MonoBehaviour
             }
         }
 
-        Ray ray2 = new Ray(point2.transform.position, -point2.transform.up);
+        Ray ray2 = new Ray(point2.transform.position, -point2.transform.forward);
         Debug.DrawLine(
-    ray2.origin,
-    ray2.origin + ray2.direction * 10f,
-    Color.red, 10f
-);
+            ray2.origin,
+            ray2.origin + ray2.direction * 10f,
+            Color.red, 10f
+        );
         if (Physics.Raycast(ray2, out RaycastHit hit2))
         {
             if (hit2.collider.CompareTag("GridCell"))
@@ -129,11 +129,14 @@ public class TurtleSwapper : MonoBehaviour
     {
         SwapTurtles(cell1, cell2);
         colliderSpawner.enabled = false;
-        transform.DORotate(new Vector3(0, 180, 0), 0.3f, RotateMode.LocalAxisAdd).OnComplete(() =>
+        AudioManager.Instance.PlaySound("ButtonClick");
+        DG.Tweening.Sequence sequence = DOTween.Sequence();
+        sequence.Join(transform.DORotate(new Vector3(0, 0, 180), 0.3f, RotateMode.LocalAxisAdd).SetEase(Ease.OutBack).OnComplete(() =>
         {
             PutDownTurtles(cell1, cell2);
             colliderSpawner.enabled = true;
-        });
+        }));
+        sequence.Join(transform.DOScaleZ(30f, 0.15f).SetEase(Ease.OutBack).SetLoops(2, LoopType.Yoyo));
     }
 
     public void PutDownTurtles(GridCell cell1, GridCell cell2)

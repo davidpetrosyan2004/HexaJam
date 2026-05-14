@@ -38,7 +38,11 @@ public class PlayerInputHandler : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (hit.collider.CompareTag("Layer")) return;
+
+            Turtle turtle = hit.collider.GetComponent<Turtle>();
+            if (turtle == null) return;
+            if (isTutorial && turtle != tutorialTurtle)
+                return;
             if (hit.collider.CompareTag("Swapper"))
             {
                 hit.collider.GetComponent<TurtleSwapper>().Swap();
@@ -47,12 +51,6 @@ public class PlayerInputHandler : MonoBehaviour
             }
             if (!hit.collider.CompareTag("Player")) return;
 
-            Turtle turtle = hit.collider.GetComponent<Turtle>();
-            if (turtle == null) return;
-
-            // Ограничение для tutorial
-            if (isTutorial && turtle != tutorialTurtle)
-                return;
 
             GameEvents.OnTurtlePressed?.Invoke(turtle);
         }

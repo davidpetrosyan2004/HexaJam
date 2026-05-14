@@ -19,11 +19,11 @@ MonoBehaviour:
     - type: 5
       rotation: -120
     - type: 4
-      rotation: -60
+      rotation: 120
     - type: 3
       rotation: 0
     - type: 4
-      rotation: 0
+      rotation: 180
   - column:
     - type: 6
       rotation: -120
@@ -39,15 +39,15 @@ MonoBehaviour:
     - type: 3
       rotation: 60
     - type: 6
-      rotation: 120
+      rotation: 180
     - type: 4
       rotation: -60
   - column:
     - type: 5
       rotation: -120
     - type: 4
-      rotation: 120
+      rotation: 0
     - type: 3
       rotation: 180
     - type: 4
-      rotation: 120
+      rotation: 0

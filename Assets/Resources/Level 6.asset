@@ -18,12 +18,12 @@ MonoBehaviour:
   - column:
     - type: 0
       rotation: 0
-    - type: 6
-      rotation: 180
+    - type: 3
+      rotation: 120
     - type: 4
       rotation: 180
     - type: 5
-      rotation: 0
+      rotation: 180
     - type: 5
       rotation: 0
   - column:
@@ -32,11 +32,11 @@ MonoBehaviour:
     - type: 3
       rotation: 120
     - type: 6
-      rotation: -120
+      rotation: 0
     - type: 3
       rotation: 120
-    - type: 0
-      rotation: 0
+    - type: 3
+      rotation: -120
   - column:
     - type: 4
       rotation: 120
@@ -49,10 +49,10 @@ MonoBehaviour:
     - type: 4
       rotation: 120
   - column:
-    - type: 3
+    - type: 5
       rotation: 120
     - type: 6
-      rotation: 60
+      rotation: 180
     - type: 1
       rotation: 0
     - type: 5
@@ -65,7 +65,7 @@ MonoBehaviour:
     - type: 4
       rotation: 0
     - type: 5
-      rotation: 180
+      rotation: -60
     - type: 3
       rotation: 180
     - type: 6

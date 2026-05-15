@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using static GridData;
+using static TurtlesMove;
 public class Turtle : MonoBehaviour
 {
     [SerializeField] private Renderer meshRenderer;
@@ -33,7 +34,7 @@ public class Turtle : MonoBehaviour
             meshRenderer.material.SetTexture("_BaseMap", value);
         }
     }
-    public IEnumerator MoveTo(Vector3 targetPosition, bool comeBack = false)
+    public IEnumerator MoveTo(Vector3 targetPosition, MoveType moveType = MoveType.Jump)
     {
         turtleAnimator.SetBool("isMoving", true);
         transform.DOPunchScale(
@@ -46,7 +47,7 @@ public class Turtle : MonoBehaviour
         if (isMoving) yield break;
         
         isMoving = true;
-        if (comeBack)
+        if (moveType == MoveType.ComeBack)
         {
             AudioManager.Instance.PlaySound("TurtleAhead");
             GameEvents.OnTurtleMovingWrong?.Invoke(true);
@@ -62,6 +63,44 @@ public class Turtle : MonoBehaviour
 
                 });
 
+            yield return new WaitUntil(() => completed);
+        }
+        else if (moveType == MoveType.Dive)
+        {
+            AudioManager.Instance.PlaySound("TurtleAdd");
+            turtleCollider.enabled = false;
+            Sequence seq = DOTween.Sequence();
+
+            // 1. Движение к точке
+            seq.Append(transform.DOMove(targetPosition, 0.6f)
+                .SetEase(Ease.OutQuad));
+
+            // 2. Нырок вниз после прибытия
+            seq.Append(transform.DOMoveY(targetPosition.y - 1.5f, 0.3f)
+                .SetEase(Ease.InCubic));
+
+            // 3. Наклон как нырок
+            seq.Join(transform.DORotate(new Vector3(0, 60f, 0), 0.3f, RotateMode.LocalAxisAdd));
+
+            // 4. Исчезновение (если нужно)
+            seq.Append(transform.DOScale(0f, 0.2f));
+            seq.OnComplete(() =>
+            {
+                ScaleSizeJump();
+                Debug.Log("Turtle moved to inventory");
+                GameEvents.OnTurtlesSubstract?.Invoke();
+                completed = true;
+                isMoving = false;
+                turtleAnimator.SetBool("isMoving", false);
+                transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 0);
+                GameEvents.OnTurtleAddedInventory?.Invoke(this);
+            });
+            GridCell cell = GetComponentInParent<GridCell>();
+
+            if (cell != null)
+            {
+                cell.Turtle = null;
+            }
             yield return new WaitUntil(() => completed);
         }
         else

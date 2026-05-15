@@ -75,6 +75,8 @@ public class Grid : MonoBehaviour
         var spawnPos = board.GetCellCenterWorld(pos);
         if (cellType == GridData.CellType.Empty)
         {
+            GridCell gridCell1 = Instantiate(hexPrefab, spawnPos + tileOffset, Quaternion.identity, board.transform);
+            gridCell1.meshRenderer.enabled = false;
             return;
         }
 

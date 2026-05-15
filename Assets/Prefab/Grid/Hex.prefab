@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f355bdb27d0b642b0f46bff75f6ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridCell
-  meshRenderer: {fileID: 6099459628377122061}
 --- !u!1 &6892864658521960015
 GameObject:
   m_ObjectHideFlags: 0

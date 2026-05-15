@@ -1,7 +1,6 @@
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
-using static TurtlesMove;
 public class TurtlesMove : MonoBehaviour
 {
     private bool oneTurtleMovingWrong = false;
@@ -9,13 +8,6 @@ public class TurtlesMove : MonoBehaviour
     private Vector3 rayOffset = new Vector3(0, 0.3f, 0);
     [SerializeField] private List<Turtle> turtlesToMove;
     [SerializeField] private Inventory inventory;
-
-    public enum MoveType
-    {
-        ComeBack,
-        Jump,
-        Dive
-    }
     private void OnEnable()
     {
         GameEvents.OnTurtlePressed += AddTurtle;
@@ -50,15 +42,13 @@ public class TurtlesMove : MonoBehaviour
 
         if (oneTurtleMovingWrong) return;
         if (!inventory.hasFreeSlot) return;
-        MoveType moveType;
-        Vector3 target;
-        (target, moveType) = GetTurtlePositionInFrontOf(turtle);
+        var (target, comeBack) = GetTurtlePositionInFrontOf(turtle);
 
-        if (moveType != MoveType.ComeBack) inventory.ChangeSlotsCount(-1);
-        StartCoroutine(turtle.MoveTo(target, moveType));
+        if (!comeBack) inventory.ChangeSlotsCount(-1);
+        StartCoroutine(turtle.MoveTo(target, comeBack));
     }
 
-    public (Vector3, MoveType) GetTurtlePositionInFrontOf(Turtle turtle)
+    public (Vector3, bool) GetTurtlePositionInFrontOf(Turtle turtle)
     {
         Ray ray = new Ray(
             turtle.transform.position - rayOffset,
@@ -66,35 +56,34 @@ public class TurtlesMove : MonoBehaviour
         );
         RaycastHit[] hits = Physics.RaycastAll(ray, 30f);
         if (hits.Length == 0)
-            return (turtle.transform.position, MoveType.Jump);
+            return (turtle.transform.position, false);
 
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
         GridCell lastValidCell = null;
+        int countCells = 0;
         foreach (var hit in hits)
         {
             if (!hit.collider.CompareTag("GridCell"))
             {
                 continue;
             }
-            
+
             GridCell cell = hit.collider.GetComponentInParent<GridCell>();
             if (cell == null)
-            {
-                continue; 
-            }
-            if (!cell.meshRenderer.enabled) return (cell.transform.position + rayOffset, MoveType.Dive);
+                continue;
+
             if (cell.transform.position == turtle.transform.position)
                 continue;
 
             if (cell.Turtle != null)
             {
-                return (cell.transform.position + rayOffset, MoveType.ComeBack);
+                return (cell.transform.position + rayOffset, true);
             }
             lastValidCell = cell;
         }
         if (lastValidCell != null)
-            return (lastValidCell.transform.position + rayOffset, MoveType.Jump);
+            return (lastValidCell.transform.position + rayOffset, false);
 
-        return (turtle.transform.position, MoveType.Jump);
+        return (turtle.transform.position, false);
     }
 }

@@ -54,13 +54,13 @@ public class TurtlesMove : MonoBehaviour
             turtle.transform.position - rayOffset,
              -turtle.transform.GetChild(0).forward
         );
+
         RaycastHit[] hits = Physics.RaycastAll(ray, 30f);
         if (hits.Length == 0)
             return (turtle.transform.position, false);
 
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
         GridCell lastValidCell = null;
-        int countCells = 0;
         foreach (var hit in hits)
         {
             if (!hit.collider.CompareTag("GridCell"))

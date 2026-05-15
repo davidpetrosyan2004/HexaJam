@@ -50,7 +50,7 @@ public class Turtle : MonoBehaviour
         {
             AudioManager.Instance.PlaySound("TurtleAhead");
             GameEvents.OnTurtleMovingWrong?.Invoke(true);
-            transform.DOMove(targetPosition + Quaternion.Euler(0, 0, 0) * transform.GetChild(0).forward* 0.3f, .4f)
+            transform.DOMove(targetPosition + transform.GetChild(0).forward* 0.3f, .4f)
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine)
                 .OnComplete(() =>
@@ -111,7 +111,7 @@ public class Turtle : MonoBehaviour
             initEffectPos -transform.GetChild(0).forward,
             Quaternion.identity
         );
-        transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 0);
+        transform.GetChild(0).rotation = Quaternion.Euler(0, 150, 0);
 
 
         GameEvents.OnTurtleAddedInventory?.Invoke(this);

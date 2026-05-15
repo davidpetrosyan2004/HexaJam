@@ -28,11 +28,10 @@ public class TurtleSwapper : Turtle
             Debug.Log("Both turtles are null");
             return;
         }
-
-        if (cell1.Turtle.isMoving || cell2.Turtle.isMoving)
-        {
-            return;
-        }
+        if (cell1.Turtle != null)
+            if (cell1.Turtle.isMoving) return;
+        if (cell2.Turtle != null)
+            if (cell2.Turtle.isMoving) return;
         Quaternion initRot1 = Quaternion.identity;
         Quaternion initRot2 = Quaternion.identity;
         (initRot1, initRot2) = GetInitRotations(cell1, cell2);
@@ -135,8 +134,10 @@ public class TurtleSwapper : Turtle
         SwapTurtles(cell1, cell2);
         colliderSpawner.enabled = false;
         AudioManager.Instance.PlaySound("ButtonClick");
-        cell1.Turtle.isMoving = true;
-        cell2.Turtle.isMoving = true;
+        if (cell1.Turtle != null)
+            cell1.Turtle.isMoving = true;
+        if (cell2.Turtle != null)
+            cell2.Turtle.isMoving = true;
         DG.Tweening.Sequence sequence = DOTween.Sequence();
         sequence.Join(transform.DORotate(new Vector3(0, 0, 180), 0.3f, RotateMode.LocalAxisAdd).SetEase(Ease.OutBack).OnComplete(() =>
         {
@@ -145,8 +146,10 @@ public class TurtleSwapper : Turtle
 
         }));
         sequence.Join(transform.DOScaleZ(30f, 0.15f).SetEase(Ease.OutBack).SetLoops(2, LoopType.Yoyo).OnComplete(()=>{
-            cell1.Turtle.isMoving = false;
-            cell2.Turtle.isMoving = false;
+            if (cell1.Turtle != null)
+                cell1.Turtle.isMoving = false;
+            if (cell2.Turtle != null)
+                cell2.Turtle.isMoving = false;
         }));
     }
 
@@ -171,7 +174,7 @@ public class TurtleSwapper : Turtle
 
         if (turtle1 != null)
         {
-            Vector3 rot1 = initRot1.eulerAngles;
+            Vector3 rot1 = initRot2.eulerAngles;
 
             turtle1.transform.GetChild(0).localRotation =
                 Quaternion.Euler(rot1.x + 180, rot1.y, rot1.z);
@@ -181,7 +184,7 @@ public class TurtleSwapper : Turtle
 
         if (turtle2 != null)
         {
-            Vector3 rot2 = initRot2.eulerAngles;
+            Vector3 rot2 = initRot1.eulerAngles;
 
             turtle2.transform.GetChild(0).localRotation =
                 Quaternion.Euler(rot2.x + 180, rot2.y, rot2.z);

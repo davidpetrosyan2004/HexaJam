@@ -111,7 +111,7 @@ public class Turtle : MonoBehaviour
             initEffectPos -transform.GetChild(0).forward,
             Quaternion.identity
         );
-        transform.localRotation = Quaternion.Euler(-90, 70, 90);
+        transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 0);
 
 
         GameEvents.OnTurtleAddedInventory?.Invoke(this);

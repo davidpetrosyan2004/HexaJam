@@ -60,6 +60,7 @@ public class TurtlesMove : MonoBehaviour
 
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
         GridCell lastValidCell = null;
+        int countCells = 0;
         foreach (var hit in hits)
         {
             if (!hit.collider.CompareTag("GridCell"))

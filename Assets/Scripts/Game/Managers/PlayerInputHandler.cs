@@ -8,7 +8,7 @@ public class PlayerInputHandler : MonoBehaviour
     public InputAction touchPositionAction;
     public InputAction touchPressAction;
     public Turtle tutorialTurtle;
-    public bool isTutorial = false;
+    public bool isTutorial;
     private void Awake()
     {
         Application.targetFrameRate = 60;

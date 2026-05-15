@@ -319,6 +319,10 @@ PrefabInstance:
       propertyPath: gridData
       value: 
       objectReference: {fileID: 11400000, guid: ab2726128d5baf14da741544ff02db0c, type: 2}
+    - target: {fileID: 9017406462877831628, guid: 510744e540130ae4ca845c926b35ce09, type: 3}
+      propertyPath: isTutorial
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7290111347196173888, guid: 510744e540130ae4ca845c926b35ce09, type: 3}

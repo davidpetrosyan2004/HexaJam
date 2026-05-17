@@ -3117,12 +3117,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   sounds:
   - name: Theme
-    volume: 0.05
+    volume: 0.01
     loop: 1
     source: {fileID: 756381964}
     clip: {fileID: 8300000, guid: 38d7663ecdc92094688e82f562658cd9, type: 3}
   - name: WaveSound
-    volume: 0.05
+    volume: 0.03
     loop: 1
     source: {fileID: 504539382}
     clip: {fileID: 8300000, guid: 1960f6cd471f7e245b4bef761c78f65f, type: 3}
